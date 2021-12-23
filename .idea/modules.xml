@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/gocredit-bill-service/gocredit-bill-service.iml" filepath="$PROJECT_DIR$/gocredit-bill-service/gocredit-bill-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gocredit-config-server/gocredit-config-server.iml" filepath="$PROJECT_DIR$/gocredit-config-server/gocredit-config-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gocredit-creditcard-service/gocredit-creditcard-service.iml" filepath="$PROJECT_DIR$/gocredit-creditcard-service/gocredit-creditcard-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gocredit-eureka-server/gocredit-eureka-server.iml" filepath="$PROJECT_DIR$/gocredit-eureka-server/gocredit-eureka-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gocredit-gateway-service/gocredit-gateway-service.iml" filepath="$PROJECT_DIR$/gocredit-gateway-service/gocredit-gateway-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gocredit-user-service/gocredit-user-service.iml" filepath="$PROJECT_DIR$/gocredit-user-service/gocredit-user-service.iml" />
+    </modules>
+  </component>
+</project>

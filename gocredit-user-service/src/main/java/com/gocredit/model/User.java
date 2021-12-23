@@ -27,14 +27,18 @@ public class User {
     @Column(name = "dateofbirth", nullable = false)
     private LocalDate dateOfBirth;
 
-    @Column(length = 30, nullable = false)
+    @Column(length = 30, nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(name = "contactnumber", nullable = true)
+    @Column(name = "contactnumber", nullable = false, unique = true)
     private long contactNumber;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "addressid")

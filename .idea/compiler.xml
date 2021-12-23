@@ -10,8 +10,8 @@
         <module name="gocredit-config-server" />
         <module name="gocredit-user-service" />
         <module name="gocredit-gateway-service" />
-        <module name="gocredit-creditcard-service" />
         <module name="gocredit-bill-service" />
+        <module name="gocredit-creditcard-service" />
         <module name="gocredit-eureka-server" />
       </profile>
     </annotationProcessing>

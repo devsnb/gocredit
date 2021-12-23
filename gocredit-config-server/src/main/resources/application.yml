@@ -7,4 +7,4 @@ spring:
     config:
       server:
         git:
-          uri: C://Users//SnehangshuBiswas//training//intellijdemos//gocreditrepo
+          uri: https://github.com/devsnb/gocreditrepo.git

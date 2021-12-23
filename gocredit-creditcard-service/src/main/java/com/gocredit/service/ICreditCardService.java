@@ -16,6 +16,6 @@ public interface ICreditCardService {
     CreditCard getById(int cardId) throws CardNotFoundException;
     List<CreditCard> getAll();
     List<CreditCard> getByName(String name) throws CardNotFoundException;
-   
+
 
 }

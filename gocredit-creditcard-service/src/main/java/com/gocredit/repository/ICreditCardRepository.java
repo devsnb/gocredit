@@ -10,11 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-<<<<<<< HEAD
-public interface ICreditCardRepository extends JpaRepository<CreditCard, Integer> {
-=======
 public interface ICreditCardRepository extends JpaRepository<CreditCard,Integer> {
->>>>>>> b7470d8079ccb4ff683d03e62aa3394be15d9a73
 
     @Query("from CreditCard c inner join c.user u where u.userId=?1 and c.nameOnCard=?2")
     List<CreditCard> findByUserAndNameOnCard(int userId, String nameOnCard) throws CreditCardNotFoundException;

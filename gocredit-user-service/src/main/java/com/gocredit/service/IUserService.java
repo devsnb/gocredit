@@ -1,5 +1,7 @@
 package com.gocredit.service;
 
+import com.gocredit.exceptions.BillNotFoundException;
+import com.gocredit.exceptions.CreditCardNotFoundException;
 import com.gocredit.exceptions.UserNotFoundException;
 import com.gocredit.model.User;
 
@@ -26,9 +28,15 @@ public interface IUserService {
 
     List<User> getByName(String name) throws UserNotFoundException;
 
-    List<User> getByEmail(String email) throws UserNotFoundException;
+    User getByEmail(String email) throws UserNotFoundException;
 
-    List<User> getByContactNumber(long contactNumber) throws UserNotFoundException;
+    User getByContactNumber(long contactNumber) throws UserNotFoundException;
+
+    User getByCardNumber(String cardNumber) throws CreditCardNotFoundException;
+
+    User getByBillId(int billId) throws BillNotFoundException;
+
+    List<User> getByIsBillPaid(boolean isPaid) throws UserNotFoundException;
 
 
 }

@@ -1,21 +1,24 @@
 package com.gocredit.service;
 
-import com.gocredit.exceptions.CardNotFoundException;
+import com.gocredit.exceptions.CreditCardNotFoundException;
 import com.gocredit.model.CreditCard;
 
 import java.util.List;
 
 public interface ICreditCardService {
 
-
     CreditCard addCard(CreditCard card);
+
     void updateCard(CreditCard card);
+
     void deleteCard(int cardId);
 
+    List<CreditCard> getByUserAndNameOnCard(int userId, String nameOnCard) throws CreditCardNotFoundException;
 
-    CreditCard getById(int cardId) throws CardNotFoundException;
-    List<CreditCard> getAll();
-    List<CreditCard> getByName(String name) throws CardNotFoundException;
+    List<CreditCard> getByUserAndType(int userId, String cardType) throws CreditCardNotFoundException;
 
+    CreditCard getByCardNumber(String number) throws CreditCardNotFoundException;
+
+    List<CreditCard> getByUserId(int userId) throws CreditCardNotFoundException;
 
 }

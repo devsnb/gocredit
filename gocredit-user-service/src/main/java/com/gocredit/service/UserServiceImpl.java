@@ -37,7 +37,7 @@ public class UserServiceImpl implements IUserService {
     /**
      * Finds user based on email and password in the database
      *
-     * @param email    email of the user
+     * @param email email of the user
      * @param password password of the user
      * @return Returns the found user in the database
      * @throws UserNotFoundException When user is not found in the database
@@ -51,7 +51,7 @@ public class UserServiceImpl implements IUserService {
      * Finds User based on contact number and password in the database
      *
      * @param contactNumber contact number of the user
-     * @param password      password of the user
+     * @param password password of the user
      * @return Returns the found user in the database
      * @throws UserNotFoundException When user is not found in the database
      */
@@ -75,14 +75,13 @@ public class UserServiceImpl implements IUserService {
     /**
      * Delete a single user id in the database
      *
-     * @param deleteId User id to delete the user in the database
+     * @param userId User id to delete the user in the database
      * @throws UserNotFoundException If the user could not be found in the database
      */
-
     @Override
-    public void deleteUser(int deleteId) throws UserNotFoundException {
+    public void deleteUser(int userId) throws UserNotFoundException {
 
-        userRepository.deleteById(deleteId);
+        userRepository.deleteById(userId);
     }
 
 
@@ -143,7 +142,7 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * Finds users based on email provided
-     *
+
      * @param email Email  of the user in the database
      * @return Returns a list of user found in the database
      * @throws UserNotFoundException If no user is found in the database
@@ -180,19 +179,24 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User getByCardNumber(String cardNumber) throws CreditCardNotFoundException {
 
-        return null;
+        User user = userRepository.findByCardNumber(cardNumber).stream().findFirst()
+                .orElseThrow(() -> new CreditCardNotFoundException("No User found with the cardNumber of " + cardNumber));
+
+        return user;
     }
 
     /**
      * Finds User based on bill id provided
      *
-     * @param billId Bill id of the bill in the database
+     * @param billId Finds User based on bill id provided
      * @return Returns the bill found in the database
      * @throws BillNotFoundException If no bill is found with the provided id in the database
      */
     @Override
     public User getByBillId(int billId) throws BillNotFoundException {
-        return null;
+        User user = userRepository.findByBillId(billId).stream().findFirst()
+                .orElseThrow(() -> new BillNotFoundException("No User found with the billId of " + billId));
+        return user;
     }
 
     /**
@@ -204,6 +208,10 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public List<User> getByIsBillPaid(boolean isPaid) throws UserNotFoundException {
-        return null;
+        List<User> users = userRepository.findByIsBillPaid(isPaid);
+        if (users.isEmpty()) {
+            throw new UserNotFoundException("No user found with the isPaid of " + isPaid);
+        }
+        return users;
     }
 }

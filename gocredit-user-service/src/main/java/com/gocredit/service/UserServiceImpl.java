@@ -143,7 +143,7 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * Finds users based on email provided
-     *
+
      * @param email Email  of the user in the database
      * @return Returns a list of user found in the database
      * @throws UserNotFoundException If no user is found in the database

@@ -22,9 +22,13 @@ public interface IUserRepository extends JpaRepository<User, Integer> {
     List<User> findByContactNumber(long contactNumber) throws UserNotFoundException;
 
     //custom queries
-//    User getByCardNumber(String cardNumber) throws UserNotFoundException;
-//
-//    User getByBillId(int billId) throws BillNotFoundException;
-//
-//    List<User> getByIsBillPaid(boolean isPaid) throws UserNotFoundException;
+
+    @Query("from User u inner join u.creditCards c where c.cardNumber=?1")
+    List<User> findByCardNumber(String cardNumber) throws UserNotFoundException;
+
+    @Query("from User u inner join u.creditCards c inner join c.bills b where b.billId=?1 ")
+    List<User> findByBillId(int billId) throws BillNotFoundException;
+
+    @Query("from User u inner join u.creditCards c inner join c.bills b where b.isPaid=?1")
+    List<User> findByIsBillPaid(boolean isPaid) throws UserNotFoundException;
 }

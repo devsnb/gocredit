@@ -60,12 +60,17 @@ public class CreditCardServiceImpl implements ICreditCardService {
      * @throws CreditCardNotFoundException If no creditCard found in the database
      */
     @Override
+<<<<<<< HEAD
     public List<CreditCard> getByUserAndNameOnCard(int userId, String nameOnCard) throws CreditCardNotFoundException {
         List<CreditCard> creditCards = creditCardRepository.findByUserAndNameOnCard(userId, nameOnCard);
         if (creditCards.isEmpty()) {
             throw new CreditCardNotFoundException("No creditCard found with the userId of " + userId + "and nameOnCard of " + nameOnCard);
         }
         return creditCards;
+=======
+    public List<CreditCard> getByUserAndNameOnCard(int userId, String nameOnCard) throws CardNotFoundException {
+        return null;
+>>>>>>> b7470d8079ccb4ff683d03e62aa3394be15d9a73
     }
 
     /**

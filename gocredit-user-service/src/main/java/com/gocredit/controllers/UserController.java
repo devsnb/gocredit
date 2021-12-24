@@ -39,11 +39,23 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createUser);
     }
 
+    /**
+     * Finds user based on email and password in the database
+     * @param email email of the user
+     * @param password password of the user
+     * @return  Returns the found user in the database
+     */
     public User loginWithEmail(String email, String password) {
 
         return null;
     }
 
+    /**
+     * Finds User based on contact number and password in the database
+     * @param contactNumber contact number of the user
+     * @param password password of the user
+     * @return Returns the found user in the database
+     */
     public User loginWithContactNumber(Long contactNumber, String password) {
 
         return null;

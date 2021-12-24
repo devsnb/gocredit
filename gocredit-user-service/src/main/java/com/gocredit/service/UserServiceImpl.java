@@ -37,7 +37,7 @@ public class UserServiceImpl implements IUserService {
     /**
      * Finds user based on email and password in the database
      *
-     * @param email    email of the user
+     * @param email email of the user
      * @param password password of the user
      * @return Returns the found user in the database
      * @throws UserNotFoundException When user is not found in the database
@@ -51,7 +51,7 @@ public class UserServiceImpl implements IUserService {
      * Finds User based on contact number and password in the database
      *
      * @param contactNumber contact number of the user
-     * @param password      password of the user
+     * @param password password of the user
      * @return Returns the found user in the database
      * @throws UserNotFoundException When user is not found in the database
      */

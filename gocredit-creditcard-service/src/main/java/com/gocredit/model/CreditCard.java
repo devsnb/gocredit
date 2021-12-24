@@ -24,7 +24,7 @@ public class CreditCard {
     @Column(name = "nameofcard", length = 30, nullable = false)
     private String nameOnCard;
 
-    @Column(name = "cardnumber", length = 30, nullable = false)
+    @Column(name = "cardnumber", length = 30, nullable = false,unique = true)
     private String cardNumber;
 
     @Enumerated(EnumType.STRING)

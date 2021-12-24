@@ -17,7 +17,7 @@ public interface IUserService {
 
     User updateUser(User user) throws UserNotFoundException;
 
-    void deleteUser(int deleteId) throws UserNotFoundException;
+    void deleteUser(int userId) throws UserNotFoundException;
 
     //    Admin methods
     User getById(int userId) throws UserNotFoundException;

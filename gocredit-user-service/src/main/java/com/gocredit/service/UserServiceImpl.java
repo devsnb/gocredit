@@ -8,6 +8,7 @@ import com.gocredit.model.Role;
 import com.gocredit.model.User;
 import com.gocredit.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,8 +20,12 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     public void setUserRepository(IUserRepository userRepository) {
+
         this.userRepository = userRepository;
     }
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     /**
      * Adds new user in the database
@@ -31,33 +36,64 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public User signup(User user) throws UserAlreadyExitsException {
-        return userRepository.save(user);
+        String email = user.getEmail();
+        Long contactNumber = user.getContactNumber();
+        User user1 = userRepository.findByEmail(email).stream().findFirst().get();
+        if (user1 != null) {
+            throw new UserAlreadyExitsException("User already exists with the email id " + user.getEmail());
+        }
+
+        User user2 = userRepository.findByContactNumber(contactNumber).stream().findFirst().get();
+        if (user2 != null) {
+            throw new UserAlreadyExitsException("User already exists with the contact number " + user.getContactNumber());
+        }
+
+        String hashedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(hashedPassword);
+        User newUser = userRepository.save(user);
+
+        return newUser;
     }
 
     /**
      * Finds user based on email and password in the database
      *
-     * @param email email of the user
+     * @param email    email of the user
      * @param password password of the user
      * @return Returns the found user in the database
      * @throws UserNotFoundException When user is not found in the database
      */
     @Override
     public User loginWithEmail(String email, String password) throws UserNotFoundException {
-        return null;
+
+        User user = userRepository.findByEmail(email).stream().findFirst().orElseThrow(() -> new UserNotFoundException("No User found with the user email " + email));
+        String hashedPassword = user.getPassword();
+        bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        if (hashedPassword != null && bCryptPasswordEncoder.matches(password, hashedPassword)) {
+            return user;
+        }
+        throw new UserNotFoundException("No User found with the user email " + email);
     }
+
 
     /**
      * Finds User based on contact number and password in the database
      *
      * @param contactNumber contact number of the user
-     * @param password password of the user
+     * @param password      password of the user
      * @return Returns the found user in the database
      * @throws UserNotFoundException When user is not found in the database
      */
     @Override
     public User loginWithContactNumber(Long contactNumber, String password) throws UserNotFoundException {
-        return null;
+
+        User user = userRepository.findByContactNumber(contactNumber).stream().findFirst().orElseThrow(() -> new UserNotFoundException("No User found with the user contact number " + contactNumber));
+        String hashedPassword = user.getPassword();
+        bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        if (hashedPassword != null && bCryptPasswordEncoder.matches(password, hashedPassword)) {
+            return user;
+        }
+        throw new UserNotFoundException("No User found with the user contact number " + contactNumber);
     }
 
     /**
@@ -94,6 +130,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public User getById(int userId) throws UserNotFoundException {
+
         return userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("No user found with the id of " + userId));
     }
@@ -105,6 +142,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public List<User> getAll() {
+
         return userRepository.findAll();
     }
 
@@ -117,6 +155,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public List<User> getByRole(String role) throws UserNotFoundException {
+
         List<User> users = userRepository.findByRole(Role.valueOf(role.toUpperCase()));
         if (users.isEmpty()) {
             throw new UserNotFoundException("No user found with the role of " + role);
@@ -133,6 +172,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public List<User> getByName(String name) throws UserNotFoundException {
+
         List<User> users = userRepository.findByName(name);
         if (users.isEmpty()) {
             throw new UserNotFoundException("No user found with the name of " + name);
@@ -142,16 +182,16 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * Finds users based on email provided
-
+     *
      * @param email Email  of the user in the database
      * @return Returns a list of user found in the database
      * @throws UserNotFoundException If no user is found in the database
      */
     @Override
     public User getByEmail(String email) throws UserNotFoundException {
+
         User user = userRepository.findByEmail(email).stream().findFirst()
                 .orElseThrow(() -> new UserNotFoundException("No user found with the email of " + email));
-
         return user;
     }
 
@@ -164,6 +204,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public User getByContactNumber(long contactNumber) throws UserNotFoundException {
+
         User user = userRepository.findByContactNumber(contactNumber).stream().findFirst()
                 .orElseThrow(() -> new UserNotFoundException("No User found with the password of " + contactNumber));
         return user;
@@ -181,7 +222,6 @@ public class UserServiceImpl implements IUserService {
 
         User user = userRepository.findByCardNumber(cardNumber).stream().findFirst()
                 .orElseThrow(() -> new CreditCardNotFoundException("No User found with the cardNumber of " + cardNumber));
-
         return user;
     }
 
@@ -194,6 +234,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public User getByBillId(int billId) throws BillNotFoundException {
+
         User user = userRepository.findByBillId(billId).stream().findFirst()
                 .orElseThrow(() -> new BillNotFoundException("No User found with the billId of " + billId));
         return user;
@@ -208,6 +249,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public List<User> getByIsBillPaid(boolean isPaid) throws UserNotFoundException {
+
         List<User> users = userRepository.findByIsBillPaid(isPaid);
         if (users.isEmpty()) {
             throw new UserNotFoundException("No user found with the isPaid of " + isPaid);

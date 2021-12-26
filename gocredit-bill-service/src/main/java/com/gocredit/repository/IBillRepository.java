@@ -12,24 +12,34 @@ import java.util.List;
 public interface IBillRepository extends JpaRepository<Bill, Integer> {
 
     @Query("from Bill b inner join b.creditCard c inner join c.user u where u.userId=?1")
-    List<Bill> getByUser(int userId);
+    List<Bill> findByUser(int userId);
 
-    @Query("from Bill b inner join b.creditCard c where c.date=?")
-    List<Bill> getByBillingDate(LocalDate date);
+    @Query("from Bill b inner join b.creditCard c inner join c.user u where b.date=?2 and u.userId=?1")
+    List<Bill> findByBillingDate(int userId, LocalDate date);
 
-    @Query("from Bill b inner join b.creditCard c where c.amount<=?1")
-    List<Bill> getByLessAmount(double amount);
+    @Query("from Bill b inner join b.creditCard c inner join c.user u where u.userId=?1 and b.amount<=?2")
+    List<Bill> findByLessAmount(int userId, double amount);
 
-    @Query("from Bill b inner join b.creditCard c where c.amount>?1")
-    List<Bill> getByGreaterAmount(double amount);
+    @Query("from Bill b inner join b.creditCard c inner join c.user u where b.amount>?2 and u.userId=?1")
+    List<Bill> findByGreaterAmount(int userId, double amount);
 
     @Query("from Bill b inner join b.creditCard c where c.cardNumber=?1")
-    List<Bill> getByCardNumber(String cardNumber);
+    List<Bill> findByCardNumber(String cardNumber);
 
-    @Query("from Bill b inner join b.creditCard c inner join c")
-    List<Bill> getByIsPaid(boolean isPaid);
+    @Query("from Bill b inner join b.creditCard c inner join c.user u where b.isPaid=?2 and u.userId=?1")
+    List<Bill> findByIsPaid(int userId, boolean isPaid);
 
     @Query("from Bill b inner join b.creditCard c inner join c.user u where b.billerName =?2 and u.userId =?1")
-    List<Bill> getByBillerName(String userId, String billerName);
+    List<Bill> findByBillerName(int userId, String billerName);
+
+    @Query("from Bill b inner join b.creditCard c where c.cardNumber=?1 and b.isPaid=?2")
+    List<Bill> findByCardAndIsPaid(String cardNumber, boolean isPaid);
+
+    @Query("from Bill b inner join b.creditCard c where c.cardNumber=?1 and b.amount<=?2")
+    List<Bill> findByCardAndLessAmount(String cardNumber, double amount);
+
+    @Query("from Bill b inner join b.creditCard c where c.cardNumber=?1 and b.amount>=?2")
+    List<Bill> findByCardAndGreaterAmount(String cardNumber, double amount);
+
 
 }

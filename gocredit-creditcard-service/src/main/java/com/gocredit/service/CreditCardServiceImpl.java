@@ -1,5 +1,6 @@
 package com.gocredit.service;
 
+import com.gocredit.exceptions.CreditCardAlreadyExistsException;
 import com.gocredit.exceptions.CreditCardNotFoundException;
 import com.gocredit.model.CardType;
 import com.gocredit.model.CreditCard;
@@ -27,6 +28,14 @@ public class CreditCardServiceImpl implements ICreditCardService {
      */
     @Override
     public CreditCard addCard(CreditCard card) {
+        CreditCard card1 = null;
+
+        card1 = creditCardRepository.findByCardNumber(card.getCardNumber());
+
+        if (card1 != null) {
+            throw new CreditCardAlreadyExistsException("This card already exists");
+        }
+
         return creditCardRepository.save(card);
     }
 
@@ -93,10 +102,14 @@ public class CreditCardServiceImpl implements ICreditCardService {
      */
     @Override
     public CreditCard getByCardNumber(String number) throws CreditCardNotFoundException {
-        CreditCard creditCards = creditCardRepository.findByCardNumber(number).stream()
-                .findFirst().orElseThrow(() -> new CreditCardNotFoundException("No creditCard found with the credit card number " + number));
+        CreditCard card = null;
+        card = creditCardRepository.findByCardNumber(number);
 
-        return creditCards;
+        if (card == null) {
+            throw new CreditCardNotFoundException("No creditCard found with the credit card number " + number);
+        }
+
+        return card;
     }
 
     /**

@@ -19,7 +19,7 @@ public interface ICreditCardRepository extends JpaRepository<CreditCard,Integer>
     List<CreditCard> findByUserAndType(int userId, CardType cardType) throws CreditCardNotFoundException;
 
     @Query("from CreditCard where cardNumber=?1")
-    List<CreditCard> findByCardNumber(String number) throws CreditCardNotFoundException;
+    CreditCard findByCardNumber(String number) throws CreditCardNotFoundException;
 
     @Query("from CreditCard c inner join c.user u where u.userId=?1")
     List<CreditCard> findByUserId(int userId) throws CreditCardNotFoundException;

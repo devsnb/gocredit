@@ -45,8 +45,18 @@ public class CreditCardServiceImpl implements ICreditCardService {
      * @param card CreditCard object with id
      */
     @Override
-    public void updateCard(CreditCard card) {
-        creditCardRepository.save(card);
+    public CreditCard updateCard(CreditCard card) {
+
+        CreditCard card1 = null;
+
+        card1 = creditCardRepository.findByCardNumber(card.getCardNumber());
+
+        if (card1 == null) {
+            throw new CreditCardNotFoundException("No card found with the credit card number of " + card.getCardNumber());
+        }
+
+        return creditCardRepository.save(card);
+
     }
 
     /**

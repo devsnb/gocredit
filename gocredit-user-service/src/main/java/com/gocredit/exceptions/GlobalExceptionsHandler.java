@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.time.LocalDateTime;
 
 @ControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+public class GlobalExceptionsHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         String message = ex.getMessage();
@@ -58,6 +58,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(status).headers(headers).body(errors);
     }
 
+
+
     @ExceptionHandler(value = UserNotFoundException.class)
     public ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException ex) {
 
@@ -89,4 +91,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         APIError errors = new APIError(LocalDateTime.now(), HttpStatus.NOT_FOUND, message, "");
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errors);
     }
+
+    @ExceptionHandler(value = InvalidUserCredentials.class)
+    public ResponseEntity<Object> handleCreditCardNotFoundException(InvalidUserCredentials ex) {
+
+        String message = ex.getMessage();
+        APIError errors = new APIError(LocalDateTime.now(), HttpStatus.NOT_FOUND, message, "");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+    }
+
+
 }

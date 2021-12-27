@@ -2,10 +2,13 @@ package com.gocredit.service;
 
 import com.gocredit.exceptions.CreditCardAlreadyExistsException;
 import com.gocredit.exceptions.CreditCardNotFoundException;
+import com.gocredit.exceptions.UserNotFoundException;
 import com.gocredit.model.CardType;
 import com.gocredit.model.CreditCard;
+import com.gocredit.model.User;
 import com.gocredit.repository.ICreditCardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,12 +16,11 @@ import java.util.List;
 @Service
 public class CreditCardServiceImpl implements ICreditCardService {
 
-    ICreditCardRepository creditCardRepository;
+    @Autowired
+    private ICreditCardRepository creditCardRepository;
 
     @Autowired
-    public void setCreditCardRepository(ICreditCardRepository creditCardRepository) {
-        this.creditCardRepository = creditCardRepository;
-    }
+    private IUserService userService;
 
     /**
      * Adds new creditCard in the database
@@ -27,7 +29,7 @@ public class CreditCardServiceImpl implements ICreditCardService {
      * @return Returns the newly created creditCard object from the database
      */
     @Override
-    public CreditCard addCard(CreditCard card) {
+    public CreditCard addCard(int userId, CreditCard card) throws UserNotFoundException, CreditCardAlreadyExistsException {
         CreditCard card1 = null;
 
         card1 = creditCardRepository.findByCardNumber(card.getCardNumber());
@@ -35,6 +37,13 @@ public class CreditCardServiceImpl implements ICreditCardService {
         if (card1 != null) {
             throw new CreditCardAlreadyExistsException("This card already exists");
         }
+
+        ResponseEntity<User> userResponse = userService.getById(userId);
+        User user = userResponse.getBody();
+        if (user == null) {
+            throw new UserNotFoundException("No user not found with the id of " + userId);
+        }
+        card.setUser(user);
 
         return creditCardRepository.save(card);
     }
@@ -47,9 +56,7 @@ public class CreditCardServiceImpl implements ICreditCardService {
     @Override
     public CreditCard updateCard(CreditCard card) {
 
-        CreditCard card1 = null;
-
-        card1 = creditCardRepository.findByCardNumber(card.getCardNumber());
+        CreditCard card1 = creditCardRepository.findByCardNumber(card.getCardNumber());
 
         if (card1 == null) {
             throw new CreditCardNotFoundException("No card found with the credit card number of " + card.getCardNumber());

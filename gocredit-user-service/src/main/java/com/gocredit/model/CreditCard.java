@@ -1,5 +1,6 @@
 package com.gocredit.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gocredit.model.attributeencryptors.StringAttributeEncryptor;
 
 import javax.persistence.*;
@@ -37,6 +38,7 @@ public class CreditCard {
 
     @ManyToOne
     @JoinColumn(name = "userid")
+    @JsonIgnore
     private User user;
 
     public CreditCard() {

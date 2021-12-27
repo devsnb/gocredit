@@ -1,6 +1,5 @@
 package com.gocredit.controllers;
 
-import com.gocredit.exceptions.UserNotFoundException;
 import com.gocredit.model.User;
 import com.gocredit.service.IUserService;
 import org.slf4j.Logger;
@@ -40,27 +39,43 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createUser);
     }
 
+    @PostMapping("/users/{userId}/password/{password}/{new}")
+    public ResponseEntity<Void> changePassword(@PathVariable("userId") int userId,
+                                               @PathVariable("password") String password,
+                                               @PathVariable("new") String newPassword) {
+        userService.changePassword(userId, password, newPassword);
+        return ResponseEntity.ok().build();
+    }
+
     /**
-     * Login the user with provided identifier and password
+     * Login the user with provided email and password
      *
-     * @param identifier email or contact number
-     * @param password   password associated with the account
-     * @return Returns already registered user with provided identifier or sends a bad request
+     * @param email    email associated with the user account
+     * @param password password associated with the account
+     * @return Returns already registered user with provided email or sends a bad request
      */
-    @PostMapping("/users/login/{identifier}/{password}")
-    public ResponseEntity<User> login(@PathVariable("identifier") String identifier, @PathVariable("password") String password) {
-        User user = null;
-        try {
-            user = userService.loginWithEmail(identifier, password);
-        } catch (UserNotFoundException ex) {
-            try {
-                user = userService.loginWithContactNumber(Long.parseLong(identifier), password);
-            } catch (UserNotFoundException exception) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            }
-        }
+    @PostMapping("/users/login/email/{email}/password/{password}")
+    public ResponseEntity<User> loginWithEmail(@PathVariable("email") String email, @PathVariable("password") String password) {
+        User user = userService.loginWithEmail(email, password);
+
         return ResponseEntity.ok(user);
     }
+
+    /**
+     * Login the user with provided contact number and password
+     *
+     * @param contact  contact number associated with the user account
+     * @param password password associated with the account
+     * @return Returns already registered user with provided contact number or sends a bad request
+     */
+    @PostMapping("/users/login/contact/{contact}/password/{password}")
+    public ResponseEntity<User> loginWithContactNumber(@PathVariable("contact") long contact, @PathVariable("password") String password) {
+
+        User user = userService.loginWithContactNumber(contact, password);
+
+        return ResponseEntity.ok(user);
+    }
+
 
     /**
      * Updates a user in the database

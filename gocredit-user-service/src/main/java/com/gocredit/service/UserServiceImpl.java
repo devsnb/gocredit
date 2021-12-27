@@ -13,6 +13,9 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements IUserService {
 
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
+
     IUserRepository userRepository;
 
     @Autowired
@@ -21,40 +24,34 @@ public class UserServiceImpl implements IUserService {
         this.userRepository = userRepository;
     }
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
     /**
      * Adds new user in the database
      *
+     * @param user User is a user object in the database
      * @return returns the newly created user object from the database
      * @throws UserAlreadyExitsException if the provided user already exists in the database
-     * @param`user User is a user object in the database
      */
     @Override
     public User signup(User user) throws UserAlreadyExitsException {
         String email = user.getEmail();
-        Long contactNumber = user.getContactNumber();
+        long contactNumber = user.getContactNumber();
 
-        User user1 = null;
-        user1 = userRepository.findByEmail(email);
+        User user1 = userRepository.findByEmail(email);
 
         if (user1 != null) {
             throw new UserAlreadyExitsException("User already exists with the email id " + user.getEmail());
         }
 
-        User user2 = null;
-        user2 = userRepository.findByContactNumber(contactNumber);
+        User user2 = userRepository.findByContactNumber(contactNumber);
 
         if (user2 != null) {
             throw new UserAlreadyExitsException("User already exists with the contact number " + user.getContactNumber());
         }
 
-        String hashedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
-        User newUser = userRepository.save(user);
 
-        return newUser;
+        return userRepository.save(user);
     }
 
     /**
@@ -63,23 +60,25 @@ public class UserServiceImpl implements IUserService {
      * @param email    email of the user
      * @param password password of the user
      * @return Returns the found user in the database
-     * @throws UserNotFoundException When user is not found in the database
+     * @throws InvalidUserCredentials When user is not found in the database
      */
     @Override
-    public User loginWithEmail(String email, String password) throws UserNotFoundException {
-        User user = null;
-        user = userRepository.findByEmail(email);
-
+    public User loginWithEmail(String email, String password) throws InvalidUserCredentials {
+        User user = userRepository.findByEmail(email);
         if (user == null) {
-            throw new InvalidUserCredentials("Invalid User Credentials");
+            throw new InvalidUserCredentials("Invalid credentials");
         }
 
         String hashedPassword = user.getPassword();
-        bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        if (hashedPassword != null && bCryptPasswordEncoder.matches(password, hashedPassword)) {
-            return user;
+
+        System.out.println(password);
+        System.out.println(hashedPassword);
+
+        if (!passwordEncoder.matches(password, hashedPassword)) {
+            throw new InvalidUserCredentials("Invalid credentials");
         }
-        throw new InvalidUserCredentials("Invalid User Credentials");
+
+        return user;
     }
 
 
@@ -89,19 +88,19 @@ public class UserServiceImpl implements IUserService {
      * @param contactNumber contact number of the user
      * @param password      password of the user
      * @return Returns the found user in the database
-     * @throws UserNotFoundException When user is not found in the database
+     * @throws InvalidUserCredentials When user is not found in the database
      */
     @Override
-    public User loginWithContactNumber(Long contactNumber, String password) throws UserNotFoundException {
-        User user = null;
-        user = userRepository.findByContactNumber(contactNumber);
+    public User loginWithContactNumber(Long contactNumber, String password) throws InvalidUserCredentials {
+        User user = userRepository.findByContactNumber(contactNumber);
+
         if (user == null) {
             throw new InvalidUserCredentials("Invalid User Credentials");
         }
 
         String hashedPassword = user.getPassword();
-        bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        if (hashedPassword != null && bCryptPasswordEncoder.matches(password, hashedPassword)) {
+
+        if (passwordEncoder.matches(password, hashedPassword)) {
             return user;
         }
         throw new InvalidUserCredentials("Invalid User Credentials");
@@ -117,27 +116,15 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User updateUser(User user) throws UserNotFoundException {
 
-        String email = user.getEmail();
-        Long contactNumber = user.getContactNumber();
-
-        User user1 = null;
-        user1 = userRepository.findByEmail(email);
+        User user1 = userRepository.findByEmail(user.getEmail());
 
         if (user1 == null) {
             throw new UserNotFoundException("No user found with the email of " + user.getEmail());
         }
 
-        User user2 = null;
-        user2 = userRepository.findByContactNumber(contactNumber);
+        user.setPassword(user1.getPassword());
 
-        if (user2 == null) {
-            throw new UserAlreadyExitsException("No user found with the contact number of " + user.getContactNumber());
-        }
-
-        String hashedPassword = bCryptPasswordEncoder.encode(user.getPassword());
-        user.setPassword(hashedPassword);
-        User updatedUser = userRepository.save(user);
-        return userRepository.save(updatedUser);
+        return userRepository.save(user);
     }
 
     /**
@@ -165,6 +152,30 @@ public class UserServiceImpl implements IUserService {
 
         return userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("No user found with the id of " + userId));
+    }
+
+    /**
+     * Updates password for a user
+     *
+     * @param userId      User id of the user we want to update the password for
+     * @param password    Current password of the user
+     * @param newPassword New password for the user
+     * @throws InvalidUserCredentials If the provided current password is wrong
+     */
+    @Override
+    public void changePassword(int userId, String password, String newPassword) throws InvalidUserCredentials, UserNotFoundException {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("No user found with the user id of " + userId));
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new InvalidUserCredentials("Invalid password");
+        }
+
+        String hashedPassword = passwordEncoder.encode(newPassword);
+
+        user.setPassword(hashedPassword);
+
+        userRepository.save(user);
+
     }
 
     /**

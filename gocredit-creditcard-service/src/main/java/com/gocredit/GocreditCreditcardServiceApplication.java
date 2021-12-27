@@ -42,7 +42,7 @@ public class GocreditCreditcardServiceApplication implements CommandLineRunner {
 		user.setName("Thanmai");
 		user.setDateOfBirth(LocalDate.parse("1999-03-06"));
 		user.setEmail("thanmai@gmail.com");
-		user.setContactNumber(8954536872l);
+		user.setContactNumber(8954536872L);
 		user.setPassword("thanmai");
 		user.setRole(Role.ADMIN);
 		user.setAddress(address);
@@ -53,7 +53,7 @@ public class GocreditCreditcardServiceApplication implements CommandLineRunner {
 
 		CreditCard creditCard = new CreditCard("Thanmai","8740973628641906", CardType.VISA, LocalDate.parse("2024-08-31"),new HashSet<>(), user1);
 
-		CreditCard savedCard = creditCardService.addCard(creditCard);
+		CreditCard savedCard = creditCardService.addCard(1, creditCard);
 
 		System.out.println(creditCardService.getByUserId(1));
 //		System.out.println(savedCard);

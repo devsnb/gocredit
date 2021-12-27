@@ -1,13 +1,15 @@
 package com.gocredit.service;
 
+import com.gocredit.exceptions.CreditCardAlreadyExistsException;
 import com.gocredit.exceptions.CreditCardNotFoundException;
+import com.gocredit.exceptions.UserNotFoundException;
 import com.gocredit.model.CreditCard;
 
 import java.util.List;
 
 public interface ICreditCardService {
 
-    CreditCard addCard(CreditCard card);
+    CreditCard addCard(int userId, CreditCard card) throws UserNotFoundException, CreditCardAlreadyExistsException;
 
     CreditCard updateCard(CreditCard card);
 

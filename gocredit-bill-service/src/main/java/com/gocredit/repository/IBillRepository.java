@@ -20,7 +20,7 @@ public interface IBillRepository extends JpaRepository<Bill, Integer> {
     @Query("from Bill b inner join b.creditCard c inner join c.user u where u.userId=?1 and b.amount<=?2")
     List<Bill> findByLessAmount(int userId, double amount);
 
-    @Query("from Bill b inner join b.creditCard c inner join c.user u where b.amount>?2 and u.userId=?1")
+    @Query("from Bill b inner join b.creditCard c inner join c.user u where b.amount>=?2 and u.userId=?1")
     List<Bill> findByGreaterAmount(int userId, double amount);
 
     @Query("from Bill b inner join b.creditCard c where c.cardNumber=?1")

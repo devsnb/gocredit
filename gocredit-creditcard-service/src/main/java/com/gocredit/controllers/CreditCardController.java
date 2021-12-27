@@ -1,7 +1,10 @@
 package com.gocredit.controllers;
 
 import com.gocredit.model.CreditCard;
+import com.gocredit.model.User;
 import com.gocredit.service.ICreditCardService;
+import com.gocredit.service.IUserService;
+import com.netflix.discovery.converters.Auto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,9 @@ public class CreditCardController {
     @Autowired
     ICreditCardService creditCardService;
 
+    @Autowired
+    IUserService userService;
+
     private final Logger logger = LoggerFactory.getLogger(CreditCardController.class);
 
     /**
@@ -25,15 +31,14 @@ public class CreditCardController {
      * @param card CreditCard is a creditCard object in the database
      * @return returns the newly created user object from the database
      */
-    @PostMapping("/cards")
-    public ResponseEntity<CreditCard> addCard(@RequestBody CreditCard card) {
+    @PostMapping("/cards/user/{userId}")
+    public ResponseEntity<CreditCard> addCard(@RequestBody CreditCard card, @PathVariable("userId") int userId) {
         logger.info("POST /credit-card-api/cards");
         logger.debug("Inside CreditCard Controller");
         logger.debug("Inside addCard Method");
-        CreditCard creditCard = creditCardService.addCard(card);
+        CreditCard creditCard = creditCardService.addCard(userId, card);
         logger.debug("creditCardService.addCard called");
         return ResponseEntity.status(HttpStatus.CREATED).body(creditCard);
-
     }
 
     /**
@@ -47,7 +52,7 @@ public class CreditCardController {
         logger.info("PUT /credit-card-api/cards");
         logger.debug("Inside CreditCard Controller");
         logger.debug("Inside updateCard Method");
-        CreditCard creditCard = creditCardService.addCard(card);
+        CreditCard creditCard = creditCardService.updateCard(card);
         logger.debug("creditCardService.updateCard called");
         return ResponseEntity.status(HttpStatus.OK).body(creditCard);
     }

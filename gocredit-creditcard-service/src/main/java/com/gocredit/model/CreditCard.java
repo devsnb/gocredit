@@ -1,5 +1,6 @@
 package com.gocredit.model;
 
+import com.gocredit.model.attributeencryptors.AttributeEncryptor;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,9 +22,11 @@ public class CreditCard {
     @SequenceGenerator(name = "card_sequence", sequenceName = "card_sequence", allocationSize = 1)
     private Integer cardId;
 
+    @Convert(converter = AttributeEncryptor.class)
     @Column(name = "nameofcard", length = 30, nullable = false)
     private String nameOnCard;
 
+    @Convert(converter = AttributeEncryptor.class)
     @Column(name = "cardnumber", length = 30, nullable = false,unique = true)
     private String cardNumber;
 

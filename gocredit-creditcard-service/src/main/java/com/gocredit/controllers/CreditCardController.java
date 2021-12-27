@@ -1,9 +1,6 @@
 package com.gocredit.controllers;
 
-
-import com.gocredit.exceptions.CreditCardNotFoundException;
 import com.gocredit.model.CreditCard;
-import com.gocredit.model.User;
 import com.gocredit.service.ICreditCardService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +37,7 @@ public class CreditCardController {
     }
 
     /**
-     * Updates a credit card in the databse
+     * Updates a credit card in the database
      *
      * @param card CreditCard object with id
      * @return Returns the updated CreditCard from the database

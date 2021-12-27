@@ -3,7 +3,7 @@ package com.gocredit.model;
 import lombok.*;
 import org.springframework.http.HttpStatus;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @ToString
 public class ApiErrors {
-    LocalDateTime timestamp;
+    LocalDate timestamp;
     HttpStatus status;
     String message;
     String path;

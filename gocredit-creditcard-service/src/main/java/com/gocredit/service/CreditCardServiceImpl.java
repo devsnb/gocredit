@@ -24,7 +24,7 @@ public class CreditCardServiceImpl implements ICreditCardService {
      * Adds new creditCard in the database
      *
      * @param card is a creditCard object in the database
-     * @return returns the newly created creditCard object from the database
+     * @return Returns the newly created creditCard object from the database
      */
     @Override
     public CreditCard addCard(CreditCard card) {
@@ -42,7 +42,7 @@ public class CreditCardServiceImpl implements ICreditCardService {
     }
 
     /**
-     * Delete a single creditCard id in the database
+     * Delete a single creditCard in the database
      *
      * @param cardId Credit card id to delete the creditCard in the database
      */
@@ -89,7 +89,7 @@ public class CreditCardServiceImpl implements ICreditCardService {
      * Finds creditCards based on card number provided
      *
      * @param number cardNumber of the creditCard in the database
-     * @return Returns a list of creditCards found in the database
+     * @return Returns a creditCard found in the database
      * @throws CreditCardNotFoundException If no creditCard found in the database
      */
     @Override

@@ -70,7 +70,7 @@ public class UserServiceImpl implements IUserService {
         User user = null;
         user = userRepository.findByEmail(email);
 
-        if(user == null) {
+        if (user == null) {
             throw new InvalidUserCredentials("Invalid User Credentials");
         }
 
@@ -116,7 +116,28 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public User updateUser(User user) throws UserNotFoundException {
-        return userRepository.save(user);
+
+        String email = user.getEmail();
+        Long contactNumber = user.getContactNumber();
+
+        User user1 = null;
+        user1 = userRepository.findByEmail(email);
+
+        if (user1 == null) {
+            throw new UserNotFoundException("No user found with the email of " + user.getEmail());
+        }
+
+        User user2 = null;
+        user2 = userRepository.findByContactNumber(contactNumber);
+
+        if (user2 == null) {
+            throw new UserAlreadyExitsException("No user found with the contact number of " + user.getContactNumber());
+        }
+
+        String hashedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(hashedPassword);
+        User updatedUser = userRepository.save(user);
+        return userRepository.save(updatedUser);
     }
 
     /**
@@ -221,7 +242,7 @@ public class UserServiceImpl implements IUserService {
         User user = null;
         user = userRepository.findByContactNumber(contactNumber);
 
-        if(user == null) {
+        if (user == null) {
             throw new UserNotFoundException("No User found with the password of " + contactNumber);
         }
 

@@ -9,7 +9,7 @@ public interface ICreditCardService {
 
     CreditCard addCard(CreditCard card);
 
-    void updateCard(CreditCard card);
+    CreditCard updateCard(CreditCard card);
 
     void deleteCard(int cardId);
 

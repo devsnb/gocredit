@@ -8,7 +8,7 @@ import com.gocredit.model.User;
 import java.util.List;
 
 public interface IUserService {
-    //    User
+    //    User methods
     User signup(User user) throws UserNotFoundException;
 
     User loginWithEmail(String email, String password) throws UserNotFoundException;
@@ -37,6 +37,5 @@ public interface IUserService {
     User getByBillId(int billId) throws BillNotFoundException;
 
     List<User> getByIsBillPaid(boolean isPaid) throws UserNotFoundException;
-
 
 }

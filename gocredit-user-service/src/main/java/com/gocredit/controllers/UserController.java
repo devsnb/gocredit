@@ -147,7 +147,7 @@ public class UserController {
      * @param name Name of the user in the database
      * @return Returns a list of users  found in the database
      */
-    @GetMapping("users/name/{name}")
+    @GetMapping("/users/name/{name}")
     public ResponseEntity<List<User>> getByName(@PathVariable("name") String name) {
         logger.info("GET /user-api/users/name/{name}");
         logger.debug("Inside User Controller");
@@ -163,7 +163,7 @@ public class UserController {
      * @param email Email  of the user in the database
      * @return Returns a list of user found in the database
      */
-    @GetMapping("users/email/{email}")
+    @GetMapping("/users/email/{email}")
     public ResponseEntity<User> getByEmail(@PathVariable("email") String email) {
         logger.info("GET /user-api/users/email/{email}");
         logger.debug("Inside User Controller");
@@ -179,9 +179,9 @@ public class UserController {
      * @param contactNumber Contact number of the user in the database
      * @return Returns a list of user found in the database
      */
-    @GetMapping("users/contactnumber/{number}")
-    public ResponseEntity<User> getByContactNumber(@PathVariable("number") long contactNumber) {
-        logger.info("GET /user-api/users/contactnumber/{number}");
+    @GetMapping("/users/contactNumber/{contactNumber}")
+    public ResponseEntity<User> getByContactNumber(@PathVariable("contactNumber") long contactNumber) {
+        logger.info("GET /user-api/users/contactNumber/{number}");
         logger.debug("Inside User Controller");
         logger.debug("Inside getByContactNumber Method ");
         User user = userService.getByContactNumber(contactNumber);
@@ -195,7 +195,7 @@ public class UserController {
      * @param cardNumber Credit Card Number of the user in the database
      * @return Returns the user found in the database
      */
-    @GetMapping("users/cardNumber/{cardNumber}")
+    @GetMapping("/users/cardNumber/{cardNumber}")
     public ResponseEntity<User> getByCardNumber(@PathVariable("cardNumber") String cardNumber) {
         logger.info("GET /user-api/users/cardNumber/{cardNumber}");
         logger.debug("Inside User Controller");
@@ -211,7 +211,7 @@ public class UserController {
      * @param billId Finds User based on bill id provided
      * @return Returns the bill found in the database
      */
-    @GetMapping("users/billId/{billId}")
+    @GetMapping("/users/billId/{billId}")
     public ResponseEntity<User> getByBillId(@PathVariable("billId") int billId) {
         logger.info("GET /user-api/users/billId/{billId}");
         logger.debug("Inside User Controller");
@@ -227,7 +227,7 @@ public class UserController {
      * @param isPaid Is user bill paid in the database
      * @return Returns a list of users found in the database
      */
-    @GetMapping("users/paid/{paid}")
+    @GetMapping("/users/paid/{paid}")
     public ResponseEntity<List<User>> getByIsBillPaid(@PathVariable("paid") boolean isPaid) {
         logger.info("GET /user-api/users/isBillPaid/{isBillPaid}");
         logger.debug("Inside User Controller");
@@ -236,6 +236,4 @@ public class UserController {
         logger.debug("userService.getByIsBillPaid Called");
         return ResponseEntity.ok().body(user);
     }
-
-
 }

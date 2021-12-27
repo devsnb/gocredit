@@ -1,16 +1,9 @@
 package com.gocredit.model;
 
-import lombok.*;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Setter
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 @Table(name = "bills")
 public class Bill {
     @Id
@@ -34,4 +27,84 @@ public class Bill {
     @ManyToOne
     @JoinColumn(name = "cardid")
     private CreditCard creditCard;
+
+    public Bill() {
+    }
+
+    public Bill(String billerName, LocalDate date, double amount, boolean isPaid, CreditCard creditCard) {
+        this.billerName = billerName;
+        this.date = date;
+        this.amount = amount;
+        this.isPaid = isPaid;
+        this.creditCard = creditCard;
+    }
+
+    public Bill(Integer billId, String billerName, LocalDate date, double amount, boolean isPaid, CreditCard creditCard) {
+        this.billId = billId;
+        this.billerName = billerName;
+        this.date = date;
+        this.amount = amount;
+        this.isPaid = isPaid;
+        this.creditCard = creditCard;
+    }
+
+    public Integer getBillId() {
+        return billId;
+    }
+
+    public void setBillId(Integer billId) {
+        this.billId = billId;
+    }
+
+    public String getBillerName() {
+        return billerName;
+    }
+
+    public void setBillerName(String billerName) {
+        this.billerName = billerName;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(boolean paid) {
+        isPaid = paid;
+    }
+
+    public CreditCard getCreditCard() {
+        return creditCard;
+    }
+
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
+    }
+
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "billId=" + billId +
+                ", billerName='" + billerName + '\'' +
+                ", date=" + date +
+                ", amount=" + amount +
+                ", isPaid=" + isPaid +
+                ", creditCard=" + creditCard +
+                '}';
+    }
 }

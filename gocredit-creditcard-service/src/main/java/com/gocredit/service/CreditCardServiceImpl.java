@@ -12,7 +12,6 @@ import java.util.List;
 @Service
 public class CreditCardServiceImpl implements ICreditCardService {
 
-
     ICreditCardRepository creditCardRepository;
 
     @Autowired
@@ -95,7 +94,7 @@ public class CreditCardServiceImpl implements ICreditCardService {
     @Override
     public CreditCard getByCardNumber(String number) throws CreditCardNotFoundException {
         CreditCard creditCards = creditCardRepository.findByCardNumber(number).stream()
-                .findFirst().orElseThrow(() -> new CreditCardNotFoundException("No creditCard found with the credit card number" + number));
+                .findFirst().orElseThrow(() -> new CreditCardNotFoundException("No creditCard found with the credit card number " + number));
 
         return creditCards;
     }

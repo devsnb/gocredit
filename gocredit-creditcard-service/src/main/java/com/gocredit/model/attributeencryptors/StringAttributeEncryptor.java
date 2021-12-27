@@ -1,5 +1,6 @@
 package com.gocredit.model.attributeencryptors;
 
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -9,15 +10,16 @@ import java.security.InvalidKeyException;
 import java.security.Key;
 import java.util.Base64;
 
-public class AttributeEncryptor implements AttributeConverter<String,String> {
+public class StringAttributeEncryptor implements AttributeConverter<String,String> {
 
     private static final String AES = "AES";
-    private static final String SECRET = "secret-key-12345";
+
+    private static String SECRET = "secret-key-12345";
 
     private final Key key;
     private final Cipher cipher;
 
-    public AttributeEncryptor() throws Exception {
+    public StringAttributeEncryptor() throws Exception {
         key = new SecretKeySpec(SECRET.getBytes(), AES);
         cipher = Cipher.getInstance(AES);
     }

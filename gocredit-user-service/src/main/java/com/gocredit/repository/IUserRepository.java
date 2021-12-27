@@ -17,9 +17,9 @@ public interface IUserRepository extends JpaRepository<User, Integer> {
 
     List<User> findByName(String name) throws UserNotFoundException;
 
-    List<User> findByEmail(String email) throws UserNotFoundException;
+    User findByEmail(String email) throws UserNotFoundException;
 
-    List<User> findByContactNumber(long contactNumber) throws UserNotFoundException;
+    User findByContactNumber(long contactNumber) throws UserNotFoundException;
 
     //custom queries
 

@@ -49,4 +49,14 @@ public class User {
     @ToString.Exclude
     private Set<CreditCard> creditCards;
 
-   }
+    public User(String name, LocalDate dateOfBirth, String email, String password, long contactNumber, Role role, Address address, Set<CreditCard> creditCards) {
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+        this.password = password;
+        this.contactNumber = contactNumber;
+        this.role = role;
+        this.address = address;
+        this.creditCards = creditCards;
+    }
+}

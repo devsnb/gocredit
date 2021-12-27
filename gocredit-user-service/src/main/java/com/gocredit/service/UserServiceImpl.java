@@ -1,9 +1,6 @@
 package com.gocredit.service;
 
-import com.gocredit.exceptions.BillNotFoundException;
-import com.gocredit.exceptions.CreditCardNotFoundException;
-import com.gocredit.exceptions.UserAlreadyExitsException;
-import com.gocredit.exceptions.UserNotFoundException;
+import com.gocredit.exceptions.*;
 import com.gocredit.model.Role;
 import com.gocredit.model.User;
 import com.gocredit.repository.IUserRepository;
@@ -38,12 +35,17 @@ public class UserServiceImpl implements IUserService {
     public User signup(User user) throws UserAlreadyExitsException {
         String email = user.getEmail();
         Long contactNumber = user.getContactNumber();
-        User user1 = userRepository.findByEmail(email).stream().findFirst().get();
+
+        User user1 = null;
+        user1 = userRepository.findByEmail(email);
+
         if (user1 != null) {
             throw new UserAlreadyExitsException("User already exists with the email id " + user.getEmail());
         }
 
-        User user2 = userRepository.findByContactNumber(contactNumber).stream().findFirst().get();
+        User user2 = null;
+        user2 = userRepository.findByContactNumber(contactNumber);
+
         if (user2 != null) {
             throw new UserAlreadyExitsException("User already exists with the contact number " + user.getContactNumber());
         }
@@ -65,14 +67,19 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public User loginWithEmail(String email, String password) throws UserNotFoundException {
+        User user = null;
+        user = userRepository.findByEmail(email);
 
-        User user = userRepository.findByEmail(email).stream().findFirst().orElseThrow(() -> new UserNotFoundException("No User found with the user email " + email));
+        if(user == null) {
+            throw new InvalidUserCredentials("Invalid User Credentials");
+        }
+
         String hashedPassword = user.getPassword();
         bCryptPasswordEncoder = new BCryptPasswordEncoder();
         if (hashedPassword != null && bCryptPasswordEncoder.matches(password, hashedPassword)) {
             return user;
         }
-        throw new UserNotFoundException("No User found with the user email " + email);
+        throw new InvalidUserCredentials("Invalid User Credentials");
     }
 
 
@@ -86,14 +93,18 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public User loginWithContactNumber(Long contactNumber, String password) throws UserNotFoundException {
+        User user = null;
+        user = userRepository.findByContactNumber(contactNumber);
+        if (user == null) {
+            throw new InvalidUserCredentials("Invalid User Credentials");
+        }
 
-        User user = userRepository.findByContactNumber(contactNumber).stream().findFirst().orElseThrow(() -> new UserNotFoundException("No User found with the user contact number " + contactNumber));
         String hashedPassword = user.getPassword();
         bCryptPasswordEncoder = new BCryptPasswordEncoder();
         if (hashedPassword != null && bCryptPasswordEncoder.matches(password, hashedPassword)) {
             return user;
         }
-        throw new UserNotFoundException("No User found with the user contact number " + contactNumber);
+        throw new InvalidUserCredentials("Invalid User Credentials");
     }
 
     /**
@@ -189,9 +200,11 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public User getByEmail(String email) throws UserNotFoundException {
-
-        User user = userRepository.findByEmail(email).stream().findFirst()
-                .orElseThrow(() -> new UserNotFoundException("No user found with the email of " + email));
+        User user = null;
+        user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new UserNotFoundException("No user found with the email of " + email);
+        }
         return user;
     }
 
@@ -205,8 +218,13 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User getByContactNumber(long contactNumber) throws UserNotFoundException {
 
-        User user = userRepository.findByContactNumber(contactNumber).stream().findFirst()
-                .orElseThrow(() -> new UserNotFoundException("No User found with the password of " + contactNumber));
+        User user = null;
+        user = userRepository.findByContactNumber(contactNumber);
+
+        if(user == null) {
+            throw new UserNotFoundException("No User found with the password of " + contactNumber);
+        }
+
         return user;
     }
 

@@ -42,4 +42,12 @@ public class CreditCard {
     @JoinColumn(name = "userid")
     private User user;
 
+    public CreditCard(String nameOnCard, String cardNumber, CardType cardType, LocalDate validityDate, Set<Bill> bills, User user) {
+        this.nameOnCard = nameOnCard;
+        this.cardNumber = cardNumber;
+        this.cardType = cardType;
+        this.validityDate = validityDate;
+        this.bills = bills;
+        this.user = user;
+    }
 }

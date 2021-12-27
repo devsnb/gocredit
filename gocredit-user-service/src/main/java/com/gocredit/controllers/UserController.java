@@ -1,5 +1,6 @@
 package com.gocredit.controllers;
 
+import com.gocredit.exceptions.UserNotFoundException;
 import com.gocredit.model.User;
 import com.gocredit.service.IUserService;
 import org.slf4j.Logger;
@@ -27,10 +28,10 @@ public class UserController {
      * Adds new user in the database
      *
      * @param user User is a user object in the database
-     * @return returns the newly created user object from the database
+     * @return Returns the newly created user object from the database
      */
     @PostMapping("/users")
-    ResponseEntity<User> signup(@RequestBody User user) {
+    public ResponseEntity<User> signup(@RequestBody User user) {
         logger.info("POST /user-api/users");
         logger.debug("Inside User Controller");
         logger.debug("Inside signup Method");
@@ -40,25 +41,25 @@ public class UserController {
     }
 
     /**
-     * Finds user based on email and password in the database
-     * @param email email of the user
-     * @param password password of the user
-     * @return  Returns the found user in the database
+     * Login the user with provided identifier and password
+     *
+     * @param identifier email or contact number
+     * @param password   password associated with the account
+     * @return Returns already registered user with provided identifier or sends a bad request
      */
-    public User loginWithEmail(String email, String password) {
-
-        return null;
-    }
-
-    /**
-     * Finds User based on contact number and password in the database
-     * @param contactNumber contact number of the user
-     * @param password password of the user
-     * @return Returns the found user in the database
-     */
-    public User loginWithContactNumber(Long contactNumber, String password) {
-
-        return null;
+    @PostMapping("/users/login/{identifier}/{password}")
+    public ResponseEntity<User> login(@PathVariable("identifier") String identifier, @PathVariable("password") String password) {
+        User user = null;
+        try {
+            user = userService.loginWithEmail(identifier, password);
+        } catch (UserNotFoundException ex) {
+            try {
+                user = userService.loginWithContactNumber(Long.parseLong(identifier), password);
+            } catch (UserNotFoundException exception) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
+        }
+        return ResponseEntity.ok(user);
     }
 
     /**

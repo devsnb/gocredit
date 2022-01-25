@@ -19,6 +19,7 @@ import java.util.Set;
 
 @SpringBootApplication
 @EnableEurekaClient
+@EnableFeignClients
 public class GocreditUserServiceApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {

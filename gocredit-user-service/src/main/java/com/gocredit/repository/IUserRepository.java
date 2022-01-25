@@ -1,11 +1,8 @@
 package com.gocredit.repository;
 
-import com.gocredit.exceptions.BillNotFoundException;
-import com.gocredit.exceptions.UserNotFoundException;
 import com.gocredit.model.Role;
 import com.gocredit.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 

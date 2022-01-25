@@ -1,10 +1,7 @@
 package com.gocredit;
 
 import com.gocredit.model.*;
-import com.gocredit.service.BillServiceImpl;
-import com.gocredit.service.IBillService;
-import com.gocredit.service.ICreditCardService;
-import com.gocredit.service.IUserService;
+import com.gocredit.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -23,40 +20,45 @@ import java.util.Set;
 @EnableFeignClients
 public class GocreditBillServiceApplication implements CommandLineRunner {
 
-	public static void main(String[] args) {
-		SpringApplication.run(GocreditBillServiceApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(GocreditBillServiceApplication.class, args);
+    }
 
-	@Autowired
-	IBillService billService;
+    @Autowired
+    IBillService billService;
 
-	@Autowired
-	ICreditCardService creditCardService;
+    @Autowired
+    ICreditCardService creditCardService;
 
-	@Autowired
-	IUserService userService;
+    @Autowired
+    IUserService userService;
 
-	@Override
-	public void run(String... args) throws Exception {
+    @Autowired
+    IPaymentService paymentService;
 
-		Address address = new Address("69A","Ohm Shakti Nagar","Coimbatore","TamilNadu",651668);
-		User user = new User("Saranya", LocalDate.parse("1999-03-27"),"saranya@gmail.com","saran",9876543210L, Role.USER,address, new HashSet<>());
-		ResponseEntity<User> userResponseEntity = userService.signup(user);
-		User savedUser = userResponseEntity.getBody();
+    @Override
+    public void run(String... args) throws Exception {
 
-		CreditCard card1 = new CreditCard();
-		Bill bill = new Bill("One97Communications", LocalDate.now(), 3650, false, null);
+        Address address = new Address("69A", "Ohm Shakti Nagar", "Coimbatore", "TamilNadu", 651668);
+        User user = new User("Saranya", LocalDate.parse("1999-03-27"), "saranya@gmail.com", "saran", 9876543210L, Role.USER, address, new HashSet<>());
+        ResponseEntity<User> userResponseEntity = userService.signup(user);
+        User savedUser = userResponseEntity.getBody();
 
-		CreditCard card = new CreditCard("Snehnagshu", "1234098765456789", CardType.MASTERCARD, LocalDate.parse("2025-10-31"), new HashSet<>(Arrays.asList(bill)), savedUser);
+        CreditCard card1 = new CreditCard();
+        Bill bill = new Bill("One97Communications", LocalDate.now(), 3650, false, null, null);
 
-		ResponseEntity<CreditCard> creditCardResponseEntity =creditCardService.addCard(card, 1);
+        CreditCard card = new CreditCard("Snehnagshu", "1234098765456789", CardType.MASTERCARD, LocalDate.parse("2025-10-31"), new HashSet<>(Arrays.asList(bill)), savedUser);
 
-		CreditCard savedCard = creditCardResponseEntity.getBody();
+        ResponseEntity<CreditCard> creditCardResponseEntity = creditCardService.addCard(card, 1);
 
-		Bill bill1 = new Bill("Me", LocalDate.now(), 562, false, savedCard);
+        CreditCard savedCard = creditCardResponseEntity.getBody();
 
-		billService.addBill(bill1);
+        Bill bill1 = new Bill("Me", LocalDate.now(), 562, false, savedCard, null);
+
+        Bill savedBill = billService.addBill(bill1);
+
+        Payment payment = paymentService.addPayment(savedBill, new Payment());
 
 
-	}
+    }
 }

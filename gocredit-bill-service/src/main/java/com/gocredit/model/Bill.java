@@ -31,24 +31,29 @@ public class Bill {
     @JsonIgnore
     private CreditCard creditCard;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Payment payments;
+
     public Bill() {
     }
 
-    public Bill(String billerName, LocalDate date, double amount, boolean isPaid, CreditCard creditCard) {
+    public Bill(String billerName, LocalDate date, double amount, boolean isPaid, CreditCard creditCard, Payment payments) {
         this.billerName = billerName;
         this.date = date;
         this.amount = amount;
         this.isPaid = isPaid;
         this.creditCard = creditCard;
+        this.payments = payments;
     }
 
-    public Bill(Integer billId, String billerName, LocalDate date, double amount, boolean isPaid, CreditCard creditCard) {
+    public Bill(Integer billId, String billerName, LocalDate date, double amount, boolean isPaid, CreditCard creditCard, Payment payments) {
         this.billId = billId;
         this.billerName = billerName;
         this.date = date;
         this.amount = amount;
         this.isPaid = isPaid;
         this.creditCard = creditCard;
+        this.payments = payments;
     }
 
     public Integer getBillId() {
@@ -99,6 +104,14 @@ public class Bill {
         this.creditCard = creditCard;
     }
 
+    public Payment getPayments() {
+        return payments;
+    }
+
+    public void setPayments(Payment payments) {
+        this.payments = payments;
+    }
+
     @Override
     public String toString() {
         return "Bill{" +
@@ -108,6 +121,7 @@ public class Bill {
                 ", amount=" + amount +
                 ", isPaid=" + isPaid +
                 ", creditCard=" + creditCard +
+                ", payments=" + payments +
                 '}';
     }
 }

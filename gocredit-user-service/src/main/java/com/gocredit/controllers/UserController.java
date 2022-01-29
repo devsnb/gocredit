@@ -16,6 +16,7 @@ import java.util.List;
 
 
 @RestController
+@CrossOrigin("http://localhost:4200")
 @RequestMapping("user-api")
 @Profile("dev")
 public class UserController {

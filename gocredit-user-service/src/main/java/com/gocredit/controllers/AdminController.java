@@ -145,4 +145,13 @@ public class AdminController {
         logger.debug("userService.getByIsBillPaid Called");
         return ResponseEntity.ok().body(user);
     }
+    @GetMapping("/users/id/{userId}")
+    public ResponseEntity<User> getById(@PathVariable("userId") int userId) {
+        logger.info("GET /user-api/users/id/{userId}");
+        logger.debug("Inside user Controller");
+        logger.debug("Inside getById Method");
+        User user = userService.getById(userId);
+        logger.debug("userService.getById Called");
+        return ResponseEntity.ok().body(user);
+    }
 }

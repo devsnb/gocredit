@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("credit-card-api")
-
+@CrossOrigin("http://localhost:4200")
 public class CreditCardController {
     @Autowired
     ICreditCardService creditCardService;

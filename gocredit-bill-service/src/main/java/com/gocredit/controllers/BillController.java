@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("bill-api")
+@CrossOrigin("http://localhost:4200")
 public class BillController {
 
     @Autowired
@@ -197,6 +198,25 @@ public class BillController {
         logger.debug("billService.getByCardNumber called");
         return ResponseEntity.ok(bills);
     }
+
+
+
+    /**
+     * Finds all bills for a particular card number
+     *
+     * @param cardId The card number we want to fetch the bills for
+     * @return Returns all the bills bor a card number
+     */
+    @GetMapping("/bills/cardId/{cardId}")
+    ResponseEntity<List<Bill>> getByCardId(@PathVariable("cardId") int cardId) {
+        logger.info("GET bill-api/bills/card/{cardId}");
+        logger.debug("Inside bill controller");
+        logger.debug("Inside getByCardId method");
+        List<Bill> bills = billService.getByCardId(cardId);
+        logger.debug("billService.getByCardId called");
+        return ResponseEntity.ok(bills);
+    }
+
 
     /**
      * Finds all the bills for a user with status paid or unpaid

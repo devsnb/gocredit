@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -20,6 +21,7 @@ import java.util.Set;
 
 @SpringBootApplication
 @EnableEurekaClient
+@CrossOrigin("http://localhost:4200")
 @EnableFeignClients
 public class GocreditBillServiceApplication implements CommandLineRunner {
 
@@ -44,8 +46,8 @@ public class GocreditBillServiceApplication implements CommandLineRunner {
 		ResponseEntity<User> userResponseEntity = userService.signup(user);
 		User savedUser = userResponseEntity.getBody();
 
-		CreditCard card1 = new CreditCard();
-		Bill bill = new Bill("One97Communications", LocalDate.now(), 3650, false, null);
+//		CreditCard card1 = new CreditCard();
+		Bill bill = new Bill("One97Communications", LocalDate.now(), 3650, false,null, null);
 
 		CreditCard card = new CreditCard("Snehnagshu", "1234098765456789", CardType.MASTERCARD, LocalDate.parse("2025-10-31"), new HashSet<>(Arrays.asList(bill)), savedUser);
 
@@ -53,9 +55,9 @@ public class GocreditBillServiceApplication implements CommandLineRunner {
 
 		CreditCard savedCard = creditCardResponseEntity.getBody();
 
-		Bill bill1 = new Bill("Me", LocalDate.now(), 562, false, savedCard);
+		Bill bill1 = new Bill("Me", LocalDate.now(), 562, false, savedCard,null);
 
-		billService.addBill(bill1);
+		System.out.println(billService.addBill(bill1));
 
 
 	}

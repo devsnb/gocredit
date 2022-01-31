@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("admin-api")
 @CrossOrigin("http://localhost:4200")
+@RequestMapping("admin-api")
 public class AdminController {
     @Autowired
     private IUserService userService;
@@ -54,7 +54,7 @@ public class AdminController {
      * Finds users based on name provided
      *
      * @param name Name of the user in the database
-     * @return Returns a list of users  found in the database
+     * @return Returns a list of users found in the database
      */
     @GetMapping("/users/name/{name}")
     public ResponseEntity<List<User>> getByName(@PathVariable("name") String name) {
@@ -69,7 +69,7 @@ public class AdminController {
     /**
      * Finds users based on email provided
      *
-     * @param email Email  of the user in the database
+     * @param email Email of the user in the database
      * @return Returns a list of user found in the database
      */
     @GetMapping("/users/email/{email}")
@@ -147,7 +147,7 @@ public class AdminController {
     }
 
     /**
-     * Finds a single user id  from the database based on the user id provided
+     * Finds a single user id from the database based on the user id provided
      *
      * @param userId User id to find the user in the database
      * @return Returns the User found in the database

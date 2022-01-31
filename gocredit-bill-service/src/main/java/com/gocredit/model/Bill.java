@@ -56,6 +56,7 @@ public class Bill {
         this.payments = payments;
     }
 
+
     public Integer getBillId() {
         return billId;
     }

@@ -16,12 +16,12 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="gocredit-bill-service" target="11" />
+      <module name="gocredit-bill-service" target="8" />
       <module name="gocredit-config-server" target="11" />
-      <module name="gocredit-creditcard-service" target="11" />
+      <module name="gocredit-creditcard-service" target="8" />
       <module name="gocredit-eureka-server" target="11" />
       <module name="gocredit-gateway-service" target="11" />
-      <module name="gocredit-user-service" target="11" />
+      <module name="gocredit-user-service" target="8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

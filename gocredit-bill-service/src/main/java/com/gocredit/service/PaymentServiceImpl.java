@@ -3,9 +3,11 @@ package com.gocredit.service;
 import com.gocredit.exceptions.PaymentNotFoundException;
 import com.gocredit.model.Bill;
 import com.gocredit.model.Payment;
+import com.gocredit.repository.IBillRepository;
 import com.razorpay.Order;
 import com.razorpay.RazorpayException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,25 +15,29 @@ import java.util.List;
 @Service
 public class PaymentServiceImpl implements IPaymentService {
 
+    @Autowired
+    private IBillRepository billRepository;
+
     @Override
-    public Payment addPayment(Bill bill, Payment payment) throws RazorpayException {
-        JSONObject options = new JSONObject();
-        options.put("amount", bill.getAmount() * 100);
-        options.put("currency", "INR");
-        options.put("receipt", "txn_" + String.valueOf(Math.round(Math.random() * 99999999)));
-        Order order = RazorpayInstance.init().Orders.create(options);
-        String id = order.get("id");
-        double amount = order.get("amount");
-        String status = order.get("status");
+    public Payment addPayment(int bill, Payment payment) throws RazorpayException {
 
-        System.out.println("Id : " + id);
-        System.out.println("Amount : " + amount);
-        System.out.println("Status : " + status);
-        System.out.println(order);
-
-        payment.setStatus(status);
-        payment.setAmount(amount);
-        payment.setOrderId(id);
+//        JSONObject options = new JSONObject();
+//        options.put("amount", bill.getAmount() * 100);
+//        options.put("currency", "INR");
+//        options.put("receipt", "txn_" + String.valueOf(Math.round(Math.random() * 99999999)));
+//        Order order = RazorpayInstance.init().Orders.create(options);
+//        String id = order.get("id");
+//        double amount = order.get("amount");
+//        String status = order.get("status");
+//
+//        System.out.println("Id : " + id);
+//        System.out.println("Amount : " + amount);
+//        System.out.println("Status : " + status);
+//        System.out.println(order);
+//
+//        payment.setStatus(status);
+//        payment.setAmount(amount);
+//        payment.setOrderId(id);
         return null;
     }
 

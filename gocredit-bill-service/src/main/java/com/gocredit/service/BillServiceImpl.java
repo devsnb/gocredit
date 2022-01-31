@@ -53,7 +53,8 @@ public class BillServiceImpl implements IBillService {
      *
      * @param billId Bill id for which we want to find the bill
      * @return Returns the bill object found in the database
-     * @throws BillNotFoundException If no bill is found in the database with the provided bill id
+     * @throws BillNotFoundException If no bill is found in the database with the
+     *                               provided bill id
      */
     @Override
     public Bill getByBillId(int billId) throws BillNotFoundException {
@@ -91,7 +92,8 @@ public class BillServiceImpl implements IBillService {
     }
 
     /**
-     * Finds and returns all the bill for a particular user for a particular biller name
+     * Finds and returns all the bill for a particular user for a particular biller
+     * name
      *
      * @param userId The id of the user we want to get all the bills for
      * @param name   Name of the biller
@@ -105,7 +107,8 @@ public class BillServiceImpl implements IBillService {
         bills = billRepository.findByBillerName(userId, name);
 
         if (bills.isEmpty()) {
-            throw new BillNotFoundException("No bill found with the biller name " + name + " and for the user with the id of " + userId);
+            throw new BillNotFoundException(
+                    "No bill found with the biller name " + name + " and for the user with the id of " + userId);
         }
         return bills;
     }
@@ -116,7 +119,8 @@ public class BillServiceImpl implements IBillService {
      * @param userId The id of the user we want to get all the bills for
      * @param date   The date we want to find the bills for
      * @return Returns a list of bills for the particular date provided
-     * @throws BillNotFoundException If no bill is found for the information provided
+     * @throws BillNotFoundException If no bill is found for the information
+     *                               provided
      */
     @Override
     public List<Bill> getByBillingDate(int userId, String date) throws BillNotFoundException {
@@ -127,7 +131,8 @@ public class BillServiceImpl implements IBillService {
         bills = billRepository.findByBillingDate(userId, parsedDate);
 
         if (bills.isEmpty()) {
-            throw new BillNotFoundException("No bill found with on the date of " + date + " and for the user with the id of " + userId);
+            throw new BillNotFoundException(
+                    "No bill found with on the date of " + date + " and for the user with the id of " + userId);
         }
         return bills;
     }
@@ -137,7 +142,8 @@ public class BillServiceImpl implements IBillService {
      *
      * @param userId User id of the user for finding bills
      * @param amount Amount for lesser bills
-     * @return Returns a list of bills found in the database for a given user for provided lesser amount
+     * @return Returns a list of bills found in the database for a given user for
+     *         provided lesser amount
      * @throws BillNotFoundException If no bill is found for the provided info
      */
     @Override
@@ -147,7 +153,8 @@ public class BillServiceImpl implements IBillService {
         bills = billRepository.findByLessAmount(userId, amount);
 
         if (bills.isEmpty()) {
-            throw new BillNotFoundException("No bill found with less amount than " + amount + " and for the user with the id of " + userId);
+            throw new BillNotFoundException(
+                    "No bill found with less amount than " + amount + " and for the user with the id of " + userId);
         }
         return bills;
     }
@@ -157,7 +164,8 @@ public class BillServiceImpl implements IBillService {
      *
      * @param userId User id of the user we want to fetch the bills for
      * @param amount Amount for greater bills
-     * @return Returns a list of bills found in the database for a given user for provided greater amount
+     * @return Returns a list of bills found in the database for a given user for
+     *         provided greater amount
      * @throws BillNotFoundException If no bill is found for the provided info
      */
     @Override
@@ -167,7 +175,8 @@ public class BillServiceImpl implements IBillService {
         bills = billRepository.findByGreaterAmount(userId, amount);
 
         if (bills.isEmpty()) {
-            throw new BillNotFoundException("No bill found with greater amount than " + amount + " and for the user with the id of " + userId);
+            throw new BillNotFoundException(
+                    "No bill found with greater amount than " + amount + " and for the user with the id of " + userId);
         }
         return bills;
     }
@@ -196,7 +205,8 @@ public class BillServiceImpl implements IBillService {
      *
      * @param userId The user id we want to fetch the bills for
      * @param isPaid The boolean status of the bill
-     * @return Returns a list of bills found in the database based on the provided info
+     * @return Returns a list of bills found in the database based on the provided
+     *         info
      * @throws BillNotFoundException If no bill is found in the database
      */
     @Override
@@ -229,7 +239,8 @@ public class BillServiceImpl implements IBillService {
         bills = billRepository.findByCardAndLessAmount(cardNumber, amount);
 
         if (bills.isEmpty()) {
-            throw new BillNotFoundException("No bill found for the card " + cardNumber + " with any bill less than " + amount);
+            throw new BillNotFoundException(
+                    "No bill found for the card " + cardNumber + " with any bill less than " + amount);
         }
 
         return bills;
@@ -250,19 +261,22 @@ public class BillServiceImpl implements IBillService {
         bills = billRepository.findByCardAndGreaterAmount(cardNumber, amount);
 
         if (bills.isEmpty()) {
-            throw new BillNotFoundException("No bill found for the card " + cardNumber + " with any bill greater than " + amount);
+            throw new BillNotFoundException(
+                    "No bill found for the card " + cardNumber + " with any bill greater than " + amount);
         }
 
         return bills;
     }
 
     /**
-     * Finds all the bills in the database for a particular card number based on bill status paid or not
+     * Finds all the bills in the database for a particular card number based on
+     * bill status paid or not
      *
      * @param cardNumber The card number we want to fetch all bills for
      * @param isPaid     The boolean status for the bill
      * @return Returns a list of bill for the provided info
-     * @throws BillNotFoundException if no bill is found in the database based on the provided info
+     * @throws BillNotFoundException if no bill is found in the database based on
+     *                               the provided info
      */
     @Override
     public List<Bill> getByCardAndIsPaid(String cardNumber, boolean isPaid) throws BillNotFoundException {
@@ -272,23 +286,26 @@ public class BillServiceImpl implements IBillService {
 
         if (bills.isEmpty()) {
             if (isPaid) {
-                throw new BillNotFoundException("No bill found for the card number " + cardNumber + " and the status of PAID");
+                throw new BillNotFoundException(
+                        "No bill found for the card number " + cardNumber + " and the status of PAID");
             }
-            throw new BillNotFoundException("No bill found for the card number " + cardNumber + " and the status of NOT_PAID");
+            throw new BillNotFoundException(
+                    "No bill found for the card number " + cardNumber + " and the status of NOT_PAID");
         }
 
         return bills;
     }
 
     @Override
-    public List<Bill> getByCardId(int cardId) throws BillNotFoundException {
+    public List<Bill> getBillsByCardId(int cardid) throws BillNotFoundException {
         List<Bill> bills = new ArrayList<>();
 
-        bills = billRepository.findByCardId(cardId);
+        bills = billRepository.findBillByCardId(cardid);
 
         if (bills.isEmpty()) {
-            throw new BillNotFoundException("No bill found for the credit card " + cardId);
+            throw new BillNotFoundException("No bills found with the id of " + cardid);
         }
+
         return bills;
     }
 }

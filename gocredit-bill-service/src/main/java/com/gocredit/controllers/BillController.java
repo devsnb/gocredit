@@ -116,7 +116,8 @@ public class BillController {
     }
 
     /**
-     * Finds and returns all the bill for a particular user for a particular biller name
+     * Finds and returns all the bill for a particular user for a particular biller
+     * name
      *
      * @param userId The id of the user we want to get all the bills for
      * @param name   Name of the biller
@@ -154,10 +155,12 @@ public class BillController {
      *
      * @param userId User id of the user for finding bills
      * @param amount Amount for lesser bills
-     * @return Returns a list of bills found in the database for a given user for provided lesser amount
+     * @return Returns a list of bills found in the database for a given user for
+     *         provided lesser amount
      */
     @GetMapping("/bills/user/{userId}/amount/less/{amount}")
-    ResponseEntity<List<Bill>> getByLessAmount(@PathVariable("userId") int userId, @PathVariable("amount") double amount) {
+    ResponseEntity<List<Bill>> getByLessAmount(@PathVariable("userId") int userId,
+            @PathVariable("amount") double amount) {
         logger.info("GET bill-api/bills/user/{userId}/amount/less/{amount}");
         logger.debug("Inside bill controller");
         logger.debug("Inside getByLessAmount method");
@@ -171,10 +174,12 @@ public class BillController {
      *
      * @param userId User id of the user we want to fetch the bills for
      * @param amount Amount for greater bills
-     * @return Returns a list of bills found in the database for a given user for provided greater amount
+     * @return Returns a list of bills found in the database for a given user for
+     *         provided greater amount
      */
     @GetMapping("/bills/user/{userId}/amount/greater/{amount}")
-    ResponseEntity<List<Bill>> getByGreaterAmount(@PathVariable("userId") int userId, @PathVariable("amount") double amount) {
+    ResponseEntity<List<Bill>> getByGreaterAmount(@PathVariable("userId") int userId,
+            @PathVariable("amount") double amount) {
         logger.info("GET bill-api/bills/user/{userId}/amount/greater/{amount}");
         logger.debug("Inside bill controller");
         logger.debug("Inside getByGreaterAmount method");
@@ -199,8 +204,6 @@ public class BillController {
         return ResponseEntity.ok(bills);
     }
 
-
-
     /**
      * Finds all bills for a particular card number
      *
@@ -208,22 +211,22 @@ public class BillController {
      * @return Returns all the bills bor a card number
      */
     @GetMapping("/bills/cardId/{cardId}")
-    ResponseEntity<List<Bill>> getByCardId(@PathVariable("cardId") int cardId) {
+    ResponseEntity<List<Bill>> getBillsByCardId(@PathVariable("cardId") int cardId) {
         logger.info("GET bill-api/bills/card/{cardId}");
         logger.debug("Inside bill controller");
         logger.debug("Inside getByCardId method");
-        List<Bill> bills = billService.getByCardId(cardId);
+        List<Bill> bills = billService.getBillsByCardId(cardId);
         logger.debug("billService.getByCardId called");
         return ResponseEntity.ok(bills);
     }
-
 
     /**
      * Finds all the bills for a user with status paid or unpaid
      *
      * @param userId The user id we want to fetch the bills for
      * @param isPaid The boolean status of the bill
-     * @return Returns a list of bills found in the database based on the provided info
+     * @return Returns a list of bills found in the database based on the provided
+     *         info
      */
     @GetMapping("/bills/user/{userId}/paid/{paid}")
     ResponseEntity<List<Bill>> getByIsPaid(@PathVariable("userId") int userId, @PathVariable("paid") boolean isPaid) {
@@ -243,7 +246,8 @@ public class BillController {
      * @return Returns a list of bills from the database based on the provided info
      */
     @GetMapping("/bills/card/{number}/bill/less/{amount}")
-    ResponseEntity<List<Bill>> getByCardAndLessAmount(@PathVariable("number") String cardNumber, @PathVariable("amount") double amount) {
+    ResponseEntity<List<Bill>> getByCardAndLessAmount(@PathVariable("number") String cardNumber,
+            @PathVariable("amount") double amount) {
         logger.info("GET bill-api/bills/card/{number}/bill/less/{amount}");
         logger.debug("Inside bill controller");
         logger.debug("Inside getByCardAndLessAmount method");
@@ -260,7 +264,8 @@ public class BillController {
      * @return Returns a list of bills from the database based on the provided info
      */
     @GetMapping("/bills/card/{number}/bill/greater/{amount}")
-    ResponseEntity<List<Bill>> getByCardAndGreaterAmount(@PathVariable("number") String cardNumber, @PathVariable("amount") double amount) {
+    ResponseEntity<List<Bill>> getByCardAndGreaterAmount(@PathVariable("number") String cardNumber,
+            @PathVariable("amount") double amount) {
         logger.info("GET bill-api/bills/card/{number}/bill/greater/{amount}");
         logger.debug("Inside bill controller");
         logger.debug("Inside getByCardAndGreaterAmount method");
@@ -270,19 +275,31 @@ public class BillController {
     }
 
     /**
-     * Finds all the bills in the database for a particular card number based on bill status paid or not
+     * Finds all the bills in the database for a particular card number based on
+     * bill status paid or not
      *
      * @param cardNumber The card number we want to fetch all bills for
      * @param isPaid     The boolean status for the bill
      * @return Returns a list of bill for the provided info
      */
     @GetMapping("/bills/card/{card}/paid/{paid}")
-    public ResponseEntity<List<Bill>> getByCardAndIsPaid(@PathVariable("card") String cardNumber, @PathVariable("paid") boolean isPaid) {
+    public ResponseEntity<List<Bill>> getByCardAndIsPaid(@PathVariable("card") String cardNumber,
+            @PathVariable("paid") boolean isPaid) {
         logger.info("GET bill-api/bills/card/{card}/paid/{paid}");
         logger.debug("Inside bill controller");
         logger.debug("Inside getByCardAndIsPaid method");
         List<Bill> bills = billService.getByCardAndIsPaid(cardNumber, isPaid);
         logger.debug("billService.getByCardAndIsPaid called");
+        return ResponseEntity.ok(bills);
+    }
+
+    @GetMapping("/bills/card/id/{cardId}")
+    public ResponseEntity<List<Bill>> getByCardId(@PathVariable("cardId") int cardId) {
+        logger.info("GET bill-api/bills/card/id/{cardId}}");
+        logger.debug("Inside bill controller");
+        logger.debug("Inside getByCardId method");
+        List<Bill> bills = billService.getBillsByCardId(cardId);
+        logger.debug("billService.getBillsByCardId called");
         return ResponseEntity.ok(bills);
     }
 

@@ -54,7 +54,7 @@ public class AdminController {
      * Finds users based on name provided
      *
      * @param name Name of the user in the database
-     * @return Returns a list of users  found in the database
+     * @return Returns a list of users found in the database
      */
     @GetMapping("/users/name/{name}")
     public ResponseEntity<List<User>> getByName(@PathVariable("name") String name) {
@@ -69,7 +69,7 @@ public class AdminController {
     /**
      * Finds users based on email provided
      *
-     * @param email Email  of the user in the database
+     * @param email Email of the user in the database
      * @return Returns a list of user found in the database
      */
     @GetMapping("/users/email/{email}")
@@ -145,6 +145,13 @@ public class AdminController {
         logger.debug("userService.getByIsBillPaid Called");
         return ResponseEntity.ok().body(user);
     }
+
+    /**
+     * Finds a single user id from the database based on the user id provided
+     *
+     * @param userId User id to find the user in the database
+     * @return Returns the User found in the database
+     */
     @GetMapping("/users/id/{userId}")
     public ResponseEntity<User> getById(@PathVariable("userId") int userId) {
         logger.info("GET /user-api/users/id/{userId}");

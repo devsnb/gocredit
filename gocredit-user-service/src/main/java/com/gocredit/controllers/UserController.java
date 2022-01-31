@@ -15,11 +15,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
-@CrossOrigin("http://localhost:4200")
 @RequestMapping("user-api")
 @Profile("dev")
+@CrossOrigin("http://localhost:4200")
 public class UserController {
 
     @Autowired
@@ -49,8 +48,8 @@ public class UserController {
 
     @PostMapping("/users/{userId}/password/{password}/{new}")
     public ResponseEntity<Void> changePassword(@PathVariable("userId") int userId,
-                                               @PathVariable("password") String password,
-                                               @PathVariable("new") String newPassword) {
+            @PathVariable("password") String password,
+            @PathVariable("new") String newPassword) {
         userService.changePassword(userId, password, newPassword);
         return ResponseEntity.ok().build();
     }
@@ -60,10 +59,12 @@ public class UserController {
      *
      * @param email    email associated with the user account
      * @param password password associated with the account
-     * @return Returns already registered user with provided email or sends a bad request
+     * @return Returns already registered user with provided email or sends a bad
+     *         request
      */
     @PostMapping("/users/login/email/{email}/password/{password}")
-    public ResponseEntity<User> loginWithEmail(@PathVariable("email") String email, @PathVariable("password") String password) {
+    public ResponseEntity<User> loginWithEmail(@PathVariable("email") String email,
+            @PathVariable("password") String password) {
         User user = userService.loginWithEmail(email, password);
 
         return ResponseEntity.ok(user);
@@ -74,16 +75,17 @@ public class UserController {
      *
      * @param contact  contact number associated with the user account
      * @param password password associated with the account
-     * @return Returns already registered user with provided contact number or sends a bad request
+     * @return Returns already registered user with provided contact number or sends
+     *         a bad request
      */
     @PostMapping("/users/login/contact/{contact}/password/{password}")
-    public ResponseEntity<User> loginWithContactNumber(@PathVariable("contact") long contact, @PathVariable("password") String password) {
+    public ResponseEntity<User> loginWithContactNumber(@PathVariable("contact") long contact,
+            @PathVariable("password") String password) {
 
         User user = userService.loginWithContactNumber(contact, password);
 
         return ResponseEntity.ok(user);
     }
-
 
     /**
      * Updates a user in the database
@@ -118,7 +120,7 @@ public class UserController {
     }
 
     /**
-     * Finds a single user id  from the database based on the user id provided
+     * Finds a single user id from the database based on the user id provided
      *
      * @param userId User id to find the user in the database
      * @return Returns the User found in the database
@@ -174,7 +176,8 @@ public class UserController {
      * @return Returns a list of credit cards found in the database
      */
     @GetMapping("users/{userId}/cards/nameOnCard/{nameOnCard}")
-    public ResponseEntity<List<CreditCard>> getByUserAndNameOnCard(@PathVariable("userId") int userId, @PathVariable("nameOnCard") String nameOnCard) {
+    public ResponseEntity<List<CreditCard>> getByUserAndNameOnCard(@PathVariable("userId") int userId,
+            @PathVariable("nameOnCard") String nameOnCard) {
         return cardService.getByUserAndNameOnCard(userId, nameOnCard);
     }
 
@@ -186,7 +189,8 @@ public class UserController {
      * @return Returns a list of credit cards found in the database
      */
     @GetMapping("users/{userId}/cards/type/{type}")
-    public ResponseEntity<List<CreditCard>> getByUserAndType(@PathVariable("userId") int userId, @PathVariable("type") String cardType) {
+    public ResponseEntity<List<CreditCard>> getByUserAndType(@PathVariable("userId") int userId,
+            @PathVariable("type") String cardType) {
         return cardService.getByUserAndType(userId, cardType);
     }
 

@@ -36,5 +36,6 @@ public interface IBillService {
 
     List<Bill> getByCardAndIsPaid(String cardNumber, boolean isPaid) throws BillNotFoundException;
 
-    List<Bill> getByCardId(int cardId) throws  BillNotFoundException;
+    List<Bill> getBillsByCardId(int cardid) throws BillNotFoundException;
+
 }

@@ -1,6 +1,7 @@
 package com.gocredit.controllers;
 
 import com.gocredit.model.CreditCard;
+import com.gocredit.model.Role;
 import com.gocredit.model.User;
 import com.gocredit.service.ICreditCardService;
 import com.gocredit.service.IUserService;
@@ -37,6 +38,7 @@ public class UserController {
      */
     @PostMapping("/users")
     public ResponseEntity<User> signup(@RequestBody User user) {
+        user.setRole(Role.USER);
         logger.info("POST /user-api/users");
         logger.debug("Inside User Controller");
         logger.debug("Inside signup Method");

@@ -279,4 +279,17 @@ public class BillServiceImpl implements IBillService {
 
         return bills;
     }
+
+    @Override
+    public List<Bill> getBillsByCardId(int cardid) throws BillNotFoundException {
+        List<Bill> bills = new ArrayList<>();
+
+        bills = billRepository.findBillByCardId(cardid);
+
+        if (bills.isEmpty()) {
+            throw new BillNotFoundException("No bills found with the id of " + cardid);
+        }
+
+        return bills;
+    }
 }

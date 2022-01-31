@@ -18,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("user-api")
 @Profile("dev")
+@CrossOrigin("http://localhost:4200")
 public class UserController {
 
     @Autowired

@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("bill-api")
+@CrossOrigin("http://localhost:4200")
 public class BillController {
 
     @Autowired
@@ -263,6 +264,16 @@ public class BillController {
         logger.debug("Inside getByCardAndIsPaid method");
         List<Bill> bills = billService.getByCardAndIsPaid(cardNumber, isPaid);
         logger.debug("billService.getByCardAndIsPaid called");
+        return ResponseEntity.ok(bills);
+    }
+
+    @GetMapping("/bills/card/id/{cardId}")
+    public ResponseEntity<List<Bill>> getByCardId(@PathVariable("cardId") int cardId) {
+        logger.info("GET bill-api/bills/card/id/{cardId}}");
+        logger.debug("Inside bill controller");
+        logger.debug("Inside getByCardId method");
+        List<Bill> bills = billService.getBillsByCardId(cardId);
+        logger.debug("billService.getBillsByCardId called");
         return ResponseEntity.ok(bills);
     }
 

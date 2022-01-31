@@ -57,7 +57,7 @@ public class GocreditBillServiceApplication implements CommandLineRunner {
 
         Bill savedBill = billService.addBill(bill1);
 
-        Payment payment = paymentService.addPayment(savedBill, new Payment());
+//        Payment payment = paymentService.addPayment(savedBill, new Payment());
 
 
     }

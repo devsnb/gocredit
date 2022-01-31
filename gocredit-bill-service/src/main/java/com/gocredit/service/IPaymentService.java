@@ -8,7 +8,7 @@ import com.razorpay.RazorpayException;
 import java.util.List;
 
 public interface IPaymentService {
-    Payment addPayment(Bill bill, Payment payment) throws RazorpayException;
+    Payment addPayment(int bill, Payment payment) throws RazorpayException;
 
     Payment updatePayment(Payment payment) throws PaymentNotFoundException;
 

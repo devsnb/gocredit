@@ -6,15 +6,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("admin-api")
+@CrossOrigin("http://localhost:4200")
 public class AdminController {
     @Autowired
     private IUserService userService;
@@ -145,6 +143,22 @@ public class AdminController {
         logger.debug("Inside getByIsBillPaid Method");
         List<User> user = userService.getByIsBillPaid(isPaid);
         logger.debug("userService.getByIsBillPaid Called");
+        return ResponseEntity.ok().body(user);
+    }
+
+    /**
+     * Finds a single user id  from the database based on the user id provided
+     *
+     * @param userId User id to find the user in the database
+     * @return Returns the User found in the database
+     */
+    @GetMapping("/users/id/{userId}")
+    public ResponseEntity<User> getById(@PathVariable("userId") int userId) {
+        logger.info("GET /user-api/users/id/{userId}");
+        logger.debug("Inside user Controller");
+        logger.debug("Inside getById Method");
+        User user = userService.getById(userId);
+        logger.debug("userService.getById Called");
         return ResponseEntity.ok().body(user);
     }
 }

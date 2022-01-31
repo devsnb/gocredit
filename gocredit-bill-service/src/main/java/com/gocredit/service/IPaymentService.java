@@ -1,7 +1,7 @@
 package com.gocredit.service;
 
 import com.gocredit.exceptions.PaymentNotFoundException;
-import com.gocredit.model.Bill;
+
 import com.gocredit.model.Payment;
 import com.razorpay.RazorpayException;
 

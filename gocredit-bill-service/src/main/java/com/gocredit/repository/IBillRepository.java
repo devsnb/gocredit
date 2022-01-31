@@ -1,6 +1,5 @@
 package com.gocredit.repository;
 
-import com.gocredit.exceptions.BillNotFoundException;
 import com.gocredit.model.Bill;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -47,6 +46,5 @@ public interface IBillRepository extends JpaRepository<Bill, Integer> {
 
     @Query("from Bill b inner join b.creditCard c where c.cardId=?1")
     List<Bill> findBillByCardId(int cardId);
-
 
 }

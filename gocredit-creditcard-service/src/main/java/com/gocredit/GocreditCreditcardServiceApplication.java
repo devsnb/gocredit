@@ -47,19 +47,19 @@ public class GocreditCreditcardServiceApplication implements CommandLineRunner {
 		user.setRole(Role.ADMIN);
 		user.setAddress(address);
 
-		ResponseEntity<User> userResponse = userService.signup(user);
-
-		User user1 = userResponse.getBody();
-
-		CreditCard creditCard = new CreditCard("Thanmai","8740973628641906", CardType.VISA, LocalDate.parse("2024-08-31"),new HashSet<>(), user1);
-
-		CreditCard savedCard = creditCardService.addCard(1, creditCard);
-
-		System.out.println(creditCardService.getByUserId(1));
-//		System.out.println(savedCard);
-
-		System.out.println(creditCardService.getByCardNumber("8740973628641906"));
-		System.out.println("Hello");
+//		ResponseEntity<User> userResponse = userService.signup(user);
+//
+//		User user1 = userResponse.getBody();
+//
+//		CreditCard creditCard = new CreditCard("Thanmai","8740973628641906", CardType.VISA, LocalDate.parse("2024-08-31"),new HashSet<>(), user1);
+//
+//		CreditCard savedCard = creditCardService.addCard(1, creditCard);
+//
+//		System.out.println(creditCardService.getByUserId(1));
+////		System.out.println(savedCard);
+//
+//		System.out.println(creditCardService.getByCardNumber("8740973628641906"));
+//		System.out.println("Hello");
 
 
 	}

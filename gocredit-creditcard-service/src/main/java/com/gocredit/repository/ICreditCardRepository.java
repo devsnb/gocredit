@@ -24,4 +24,7 @@ public interface ICreditCardRepository extends JpaRepository<CreditCard,Integer>
     @Query("from CreditCard c inner join c.user u where u.userId=?1")
     List<CreditCard> findByUserId(int userId) throws CreditCardNotFoundException;
 
+    @Query(value = "delete from creditcards where cardid=?1", nativeQuery = true)
+    Void deleteById(int cardId);
+
 }

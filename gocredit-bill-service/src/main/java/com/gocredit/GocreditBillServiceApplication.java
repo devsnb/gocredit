@@ -20,7 +20,6 @@ import java.util.HashSet;
 
 @SpringBootApplication
 @EnableEurekaClient
-@CrossOrigin("http://localhost:4200")
 @EnableFeignClients
 public class GocreditBillServiceApplication implements CommandLineRunner {
 

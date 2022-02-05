@@ -14,13 +14,13 @@ public class User {
     @Column(name = "userid")
     private Integer userId;
 
-    @Column(length = 30, nullable = false)
+    @Column(nullable = false)
     private String name;
 
     @Column(name = "dateofbirth", nullable = false)
     private LocalDate dateOfBirth;
 
-    @Column(length = 30, nullable = false, unique = true)
+    @Column(nullable = false)
     private String email;
 
     @Column(nullable = false)

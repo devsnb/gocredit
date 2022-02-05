@@ -17,7 +17,7 @@ public class CreditCard {
     private Integer cardId;
 
     @Convert(converter = StringAttributeEncryptor.class)
-    @Column(name = "nameoncard", length = 30, nullable = false)
+    @Column(name = "nameoncard", nullable = false)
     private String nameOnCard;
 
     @Convert(converter = StringAttributeEncryptor.class)

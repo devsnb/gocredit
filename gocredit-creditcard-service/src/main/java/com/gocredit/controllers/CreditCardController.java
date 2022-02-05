@@ -34,6 +34,7 @@ public class CreditCardController {
      */
     @PostMapping("/cards/user/{userId}")
     public ResponseEntity<CreditCard> addCard(@RequestBody CreditCard card, @PathVariable("userId") int userId) {
+        System.out.println(card);
         logger.info("POST /credit-card-api/cards");
         logger.debug("Inside CreditCard Controller");
         logger.debug("Inside addCard Method");

@@ -16,4 +16,7 @@ public interface ICreditCardService {
 
     @GetMapping("/credit-card-api/cards/number/{number}")
     public ResponseEntity<CreditCard> getByCardNumber(@PathVariable("number") String number);
+
+    @GetMapping("/credit-card-api/cards/id/{cardId}")
+    public ResponseEntity<CreditCard> getById(@PathVariable("cardId") int number);
 }

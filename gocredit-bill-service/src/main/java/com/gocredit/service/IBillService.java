@@ -6,7 +6,7 @@ import com.gocredit.model.Bill;
 import java.util.List;
 
 public interface IBillService {
-    Bill addBill(Bill bill);
+    Bill addBill(Bill bill, int cardId);
 
     Bill updateBill(Bill bill);
 

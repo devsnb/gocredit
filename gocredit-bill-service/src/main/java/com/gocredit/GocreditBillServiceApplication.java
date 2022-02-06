@@ -57,7 +57,7 @@ public class GocreditBillServiceApplication implements CommandLineRunner {
 
 		Bill bill1 = new Bill("Me", LocalDate.now(), 562, false, savedCard, null);
 
-		System.out.println(billService.addBill(bill1));
+//		System.out.println(billService.addBill(bill1));
 
 	}
 }

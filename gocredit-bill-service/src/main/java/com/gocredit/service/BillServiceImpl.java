@@ -2,6 +2,7 @@ package com.gocredit.service;
 
 import com.gocredit.exceptions.BillNotFoundException;
 import com.gocredit.model.Bill;
+import com.gocredit.model.CreditCard;
 import com.gocredit.repository.IBillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ public class BillServiceImpl implements IBillService {
     @Autowired
     private IBillRepository billRepository;
 
+    @Autowired
+    ICreditCardService creditCardService;
+
     /**
      * Adds a bill in the database
      *
@@ -23,7 +27,12 @@ public class BillServiceImpl implements IBillService {
      * @return Returns the saved bill from the database
      */
     @Override
-    public Bill addBill(Bill bill) {
+    public Bill addBill(Bill bill, int cardId) {
+
+        CreditCard card = creditCardService.getById(cardId).getBody();
+
+        bill.setCreditCard(card);
+
         return billRepository.save(bill);
     }
 
@@ -143,7 +152,7 @@ public class BillServiceImpl implements IBillService {
      * @param userId User id of the user for finding bills
      * @param amount Amount for lesser bills
      * @return Returns a list of bills found in the database for a given user for
-     *         provided lesser amount
+     * provided lesser amount
      * @throws BillNotFoundException If no bill is found for the provided info
      */
     @Override
@@ -165,7 +174,7 @@ public class BillServiceImpl implements IBillService {
      * @param userId User id of the user we want to fetch the bills for
      * @param amount Amount for greater bills
      * @return Returns a list of bills found in the database for a given user for
-     *         provided greater amount
+     * provided greater amount
      * @throws BillNotFoundException If no bill is found for the provided info
      */
     @Override
@@ -206,7 +215,7 @@ public class BillServiceImpl implements IBillService {
      * @param userId The user id we want to fetch the bills for
      * @param isPaid The boolean status of the bill
      * @return Returns a list of bills found in the database based on the provided
-     *         info
+     * info
      * @throws BillNotFoundException If no bill is found in the database
      */
     @Override

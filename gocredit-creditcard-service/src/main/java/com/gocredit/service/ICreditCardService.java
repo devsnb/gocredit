@@ -23,4 +23,6 @@ public interface ICreditCardService {
 
     List<CreditCard> getByUserId(int userId) throws CreditCardNotFoundException;
 
+    CreditCard getById(int cardid) throws CreditCardNotFoundException;
+
 }

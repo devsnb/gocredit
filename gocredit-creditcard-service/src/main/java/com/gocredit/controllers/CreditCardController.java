@@ -60,6 +60,22 @@ public class CreditCardController {
     }
 
     /**
+     * FInd a single creditCard id in the database based on the card id provided
+     *
+     * @param cardId CreditCard id to find the creditCard in the database
+     * @return Returns the found credit card
+     */
+    @GetMapping("/cards/id/{cardId}")
+    public ResponseEntity<CreditCard> getById(@PathVariable("cardId") int cardId) {
+        logger.info("GET /credit-card-api/cards");
+        logger.debug("Inside CreditCard Controller");
+        logger.debug("Inside getById Method");
+        CreditCard card = creditCardService.getById(cardId);
+        logger.debug("creditCardService.getById called");
+        return ResponseEntity.ok(card);
+    }
+
+    /**
      * Delete a single creditCard id in the database based on the card id provided
      *
      * @param cardId CreditCard id to delete the creditCard in the database

@@ -33,6 +33,7 @@ public class CreditCard {
     private LocalDate validityDate;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
     @Column(name = "billid")
     private Set<Bill> bills;
 

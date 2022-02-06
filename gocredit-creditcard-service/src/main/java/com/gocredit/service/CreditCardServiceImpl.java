@@ -144,4 +144,9 @@ public class CreditCardServiceImpl implements ICreditCardService {
         }
         return creditCards;
     }
+
+    @Override
+    public CreditCard getById(int cardid) throws CreditCardNotFoundException {
+        return creditCardRepository.findById(cardid).orElseThrow(() -> new CreditCardNotFoundException("No credit card found with the id of " + cardid));
+    }
 }

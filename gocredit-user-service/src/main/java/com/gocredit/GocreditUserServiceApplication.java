@@ -37,9 +37,9 @@ public class GocreditUserServiceApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Address address = new Address("69A","Ohm Shakti Nagar","Coimbatore","TamilNadu",651668);
-		User user = new User("Saranya", LocalDate.parse("1999-03-27"),"saranya@gmail.com","saran",9876543210l, Role.USER,address, new HashSet<>());
-		userService.signup(user);
+//		Address address = new Address("69A","Ohm Shakti Nagar","Coimbatore","TamilNadu",651668);
+//		User user = new User("Saranya", LocalDate.parse("1999-03-27"),"saranya@gmail.com","saran",9876543210l, Role.USER,address, new HashSet<>());
+//		userService.signup(user);
 
 //		System.out.println("Login With Email: ");
 //		System.out.println("hashed :" + userService.loginWithEmail("saranya@gmail.com", "saran").getPassword());
@@ -59,15 +59,15 @@ public class GocreditUserServiceApplication implements CommandLineRunner {
 //		System.out.println();
 //		System.out.println("Get By Name");
 //		userService.getByName("Saranya").forEach(System.out::println);
-		CreditCard card1 = new CreditCard();
-		Bill bill = new Bill("One97Communications", LocalDate.now(), 3650, false, null);
-
-		CreditCard card = new CreditCard("Snehnagshu", "1234098765456789", CardType.MASTERCARD, LocalDate.parse("2025-10-31"), new HashSet<>(Arrays.asList(bill)), user);
-
-		Set<CreditCard> cards = new HashSet<>(Arrays.asList(card));
-
-		user.setCreditCards(cards);
-		User updatedUser = userService.updateUser(user);
+//		CreditCard card1 = new CreditCard();
+//		Bill bill = new Bill("One97Communications", LocalDate.now(), 3650, false, null);
+//
+//		CreditCard card = new CreditCard("Snehnagshu", "1234098765456789", CardType.MASTERCARD, LocalDate.parse("2025-10-31"), new HashSet<>(Arrays.asList(bill)), user);
+//
+//		Set<CreditCard> cards = new HashSet<>(Arrays.asList(card));
+//
+//		user.setCreditCards(cards);
+//		User updatedUser = userService.updateUser(user);
 //		System.out.println(updatedUser);
 
 	}
